@@ -32,6 +32,12 @@ WordTrack.Preloader.prototype = {
 
 		//add image line
 		this.load.image('line' , 'img/fusia.png');
+
+		this.load.image('done' , 'img/done.png');
+		this.load.image('nextword' , 'img/nextword.png');
+		this.load.image('tryagain' , 'img/tryagain.png');
+
+		this.load.image('pen' , 'img/pen.png');
 	},
 	create: function(){
 		// start the MainMenu state
