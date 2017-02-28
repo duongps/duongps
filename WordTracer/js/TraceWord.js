@@ -24,6 +24,8 @@ WordTrack.TraceWord = function(game){
 		this.arrTextForDraw;
 
 		this.bmd;
+
+		this.drawImage;
 };
 
 WordTrack.TraceWord.prototype = {
@@ -39,12 +41,12 @@ WordTrack.TraceWord.prototype = {
 			this.btnDone.events.onInputOver.add(this.onOverButton, this);
 			this.btnDone.events.onInputOut.add(this.onOutButton, this);
 
-			this.btnTryAgain = this.add.button(570, 440, 'tryagain', this.actionOnClickDone, this);
+			this.btnTryAgain = this.add.button(570, 440, 'tryagain', this.actionOnClickTryAgain, this);
 			this.btnTryAgain.events.onInputOver.add(this.onOverButton, this);
 			this.btnTryAgain.events.onInputOut.add(this.onOutButton, this);
 			this.btnTryAgain.visible = false;
 
-			this.btnNextWord = this.add.button(570, 440, 'nextword', this.actionOnClickDone, this);
+			this.btnNextWord = this.add.button(570, 440, 'nextword', this.actionOnClickNextWord, this);
 			this.btnNextWord.events.onInputOver.add(this.onOverButton, this);
 			this.btnNextWord.events.onInputOut.add(this.onOutButton, this);
 			this.btnNextWord.visible = false;
@@ -90,7 +92,7 @@ WordTrack.TraceWord.prototype = {
 			this.addEventAllNumbers();
 
 			this.bmd = this.add.bitmapData(800, 600);
-			this.add.sprite(0, 0, this.bmd);
+			this.drawImage = this.add.sprite(0, 0, this.bmd);
 		  this.input.addMoveCallback(this.paint, this);
 	},
 
@@ -138,11 +140,24 @@ WordTrack.TraceWord.prototype = {
 	},
 
 	actionOnClickTryAgain: function() {
+			this.arrResult = [];
+			this.bmd.clear();
+			this.input.addMoveCallback(this.paint, this);
 
+			this.btnDone.visible = true;
+			this.txtBadDraw.visible = false;
+			this.btnTryAgain.visible = false;
 	},
 
 	actionOnClickNextWord: function() {
+			this.arrResult = [];
+			this.bmd.clear();
+			this.input.addMoveCallback(this.paint, this);
+			this.initWord('i');
 
+			this.btnDone.visible = true;
+			this.txtWellDone.visible = false;
+			this.btnNextWord.visible = false;
 	},
 
 	onOverButton: function() {
@@ -163,7 +178,6 @@ WordTrack.TraceWord.prototype = {
 	overNumber: function(obj) {
 			if(this.input.mousePointer.isDown && this.arrResult.indexOf(obj) == -1) {
 					this.arrResult.push(obj);
-					console.log('this.resultTotal: ' + this.arrResult);
 			}
 	},
 
