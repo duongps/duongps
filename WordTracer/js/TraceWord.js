@@ -27,6 +27,9 @@ WordTrack.TraceWord = function(game){
 		//define line between numbers
 		this.groupLines;
 		this.lineDrawing;
+		this.lineWidth = 37;
+		this.lineAlpha = 0.5;
+		this.boundSpaceDraw = 50;
 
 		//tween for numbers
 		this.tween;
@@ -77,7 +80,15 @@ WordTrack.TraceWord.prototype = {
 			//enable input all number
 			this.enableInputAllNumber(true);
 
-			this.imgOne.events.onInputDown.add(this.listenerDrawingImgOne, this);
+			this.imgOne.events.onInputDown.add(this.listenerDrawingImgClicked, this);
+			this.imgTwo.events.onInputDown.add(this.listenerDrawingImgClicked, this);
+			this.imgThree.events.onInputDown.add(this.listenerDrawingImgClicked, this);
+			this.imgFour.events.onInputDown.add(this.listenerDrawingImgClicked, this);
+			this.imgFive.events.onInputDown.add(this.listenerDrawingImgClicked, this);
+			this.imgSix.events.onInputDown.add(this.listenerDrawingImgClicked, this);
+			this.imgSeven.events.onInputDown.add(this.listenerDrawingImgClicked, this);
+			this.imgEight.events.onInputDown.add(this.listenerDrawingImgClicked, this);
+
 			this.imgTwo.events.onInputOver.add(this.over, this);
 			this.imgThree.events.onInputOver.add(this.over, this);
 			this.imgFour.events.onInputOver.add(this.over, this);
@@ -93,6 +104,9 @@ WordTrack.TraceWord.prototype = {
 
 			//init word p first
 			this.initWord('p');
+
+			this.tmp = this.imgOne;
+			this.targetImg = this.imgTwo;
 	},
 
 	over: function(obj) {
@@ -100,12 +114,13 @@ WordTrack.TraceWord.prototype = {
 					return;
 			}
 
+			// this.tmp.visible = false;
 			this.tween.stop();
 			obj.alpha = 1;
 			if(this.checkDrawing) {
 					this.lineDrawing.height = Math.sqrt((obj.x - this.lineDrawing.x) * (obj.x - this.lineDrawing.x)
 																				+ (obj.y - this.lineDrawing.y) * (obj.y - this.lineDrawing.y));
-					this.lineDrawing.rotation = this.physics.arcade.angleBetween(this.lineDrawing, obj) - 3.14/2;
+					// this.lineDrawing.rotation = this.physics.arcade.angleBetween(this.lineDrawing, obj) - 3.14/2;
 			}
 
 			// image eight stop drawing
@@ -139,57 +154,70 @@ WordTrack.TraceWord.prototype = {
 
 			this.tween = this.add.tween(this.targetImg).to( { alpha: 0.2 }, this.speedNumber, "Linear", true ,0 , -1 , true);
 
-			for(var i = 0 ; i < this.arrApprovedNumberHover.length ; i++) {
-					if(obj == this.arrApprovedNumberHover[i]){
-							this.lineDrawing = this.groupLines.create(obj.x, obj.y, 'line');
-							this.lineDrawing.width = 15;
-							this.lineDrawing.height = 0;
-							this.lineDrawing.alpha = 0.5;
-							this.lineDrawing.anchor.setTo(0.5, 0.0);
-							this.physics.arcade.enable(this.lineDrawing, Phaser.Physics.ARCADE);
-							this.tmp = obj;
-							if(this.startDrawing) {
-									this.checkDrawing = true;
-							}
-							break;
-					}
-
-					this.checkDrawing = false;
-			}
+			// for(var i = 0 ; i < this.arrApprovedNumberHover.length ; i++) {
+			// 		if(obj == this.arrApprovedNumberHover[i]){
+			// 				this.lineDrawing = this.groupLines.create(obj.x, obj.y, 'line');
+			// 				this.lineDrawing.width = this.lineWidth;
+			// 				this.lineDrawing.height = 0;
+			// 				this.lineDrawing.alpha = this.lineAlpha;
+			// 				this.lineDrawing.anchor.setTo(0.5, 0.0);
+			// 				this.physics.arcade.enable(this.lineDrawing, Phaser.Physics.ARCADE);
+			// 				this.tmp = obj;
+			// 				if(this.startDrawing) {
+			// 						this.checkDrawing = true;
+			// 				}
+			// 				break;
+			// 		}
+			//
+			// 		this.checkDrawing = false;
+			// }
 
 			//remove event horver
-			obj.inputEnabled = false;
+			//obj.inputEnabled = false;
+			this.tmp = obj;
 	},
 
-	listenerDrawingImgOne: function() {
-			this.tween.stop();
-			this.imgOne.alpha = 1;
-			this.startDrawing = true;
+	listenerDrawingImgClicked: function(obj) {
+		console.log('click image');
+		if(obj == this.tmp) {
+				this.startDrawing = true;
 
-			if(!this.checkDrawing) {
-					this.tween = this.add.tween(this.imgTwo).to( { alpha: 0.2 }, this.speedNumber, "Linear", true ,0 , -1 , true);
+				// if(!this.checkDrawing) {
+						this.tween = this.add.tween(this.targetImg).to( { alpha: 0.2 }, this.speedNumber, "Linear", true ,0 , -1 , true);
 
-					this.lineDrawing = this.groupLines.create(this.imgOne.x, this.imgOne.y, 'line');
-					this.lineDrawing.width = 15;
-					this.lineDrawing.height = 0;
-					this.lineDrawing.alpha = 0.5;
-					this.lineDrawing.anchor.setTo(0.5, 0.0);
-					this.physics.arcade.enable(this.lineDrawing, Phaser.Physics.ARCADE);
+						this.lineDrawing = this.groupLines.create(obj.x, obj.y, 'line');
+						this.lineDrawing.width = this.lineWidth;
+						this.lineDrawing.height = 0;
+						this.lineDrawing.alpha = this.lineAlpha;
+						this.lineDrawing.anchor.setTo(0.5, 0.0);
+						this.physics.arcade.enable(this.lineDrawing, Phaser.Physics.ARCADE);
 
-					this.checkDrawing = true;
-					this.tmp = this.imgOne;
-					this.targetImg = this.imgTwo;
-			}
+						this.checkDrawing = true;
+				// }
+		}
 	},
 
 	update: function() {
-			if (this.checkDrawing)
+			if (this.checkDrawing && this.input.mousePointer.isDown)
 	 		{
-					this.lineDrawing.rotation = this.physics.arcade.angleBetween(this.tmp, this.input.mousePointer) - 3.14/2;
+					// this.lineDrawing.rotation = this.physics.arcade.angleBetween(this.tmp, this.input.mousePointer) - 3.14/2;
 					this.lineDrawing.height = this.physics.arcade.distanceToPointer(this.tmp);
+					if(this.input.mousePointer.x < this.imgOne.x - this.boundSpaceDraw
+							|| this.input.mousePointer.x > this.imgOne.x + this.boundSpaceDraw) {
+									this.checkDrawing = false;
+					}
 			}else {
 					this.checkDrawing = false;
+					if(this.lineDrawing != undefined) {
+							var tweenRoolback = this.add.tween(this.lineDrawing).to( { height: this.tmp.y }, 100, "Linear", true ,0 , -1 , true);
+							tweenRoolback.onComplete.add(this.rollbackLine, this);
+					}
 			}
+	},
+
+	rollbackLine: function() {
+			// this.lineDrawing.destroy();
+			// this.tween.stop();
 	},
 
 	enableInputAllNumber: function(flag) {
