@@ -1,6 +1,5 @@
 WordTrack.TraceWord = function(game){
-		this.textLearnWord;
-		this.textWordTrace;
+		this.textDone;
 		this.imgAlphaBet;
 
 		this.imgOne;
@@ -18,34 +17,29 @@ WordTrack.TraceWord = function(game){
 		this.arrApprovedNumberHover;
 		this.arrTextForDraw;
 
-		this.tmp;
-		this.targetImg;
-
-		this.checkDrawing = false;
 		this.startDrawing = false;
 
-		//define line between numbers
-		this.groupLines;
-		this.lineDrawing;
-		this.lineWidth = 37;
-		this.lineAlpha = 0.5;
-		this.boundSpaceDraw = 50;
-
 		//tween for numbers
-		this.tween;
+		this.tweenImgOne;
 
 		//speed tween
 		this.speedNumber = 200;
+
+		this.graphics;
+
+		this.bmd;
 };
 
 WordTrack.TraceWord.prototype = {
 	create: function(){
 			//add text
-			this.textWordTrace = this.add.text(this.world.centerX,10,'Word	Tracer', {font: "24px Arial", fill: '#FFFFFF'});
-			this.textWordTrace.anchor.setTo(0.5, 0);
+			var textWordTrace = this.add.text(this.world.centerX,10,'Word	Tracer', {font: "24px Arial", fill: '#FFFFFF'});
+			textWordTrace.anchor.setTo(0.5, 0);
 
-			this.textLearnWord = this.add.text(this.world.centerX,50,'No.1	word', {font: "32px Arial", fill: '#FFFFFF'});
-			this.textLearnWord.anchor.setTo(0.5, 0);
+			var textLearnWord = this.add.text(this.world.centerX,50,'No.1	word', {font: "32px Arial", fill: '#FFFFFF'});
+			textLearnWord.anchor.setTo(0.5, 0);
+
+			this.textDone = this.add.text(600,440,'Done', {font: "32px Arial", fill: '#FFFFFF'});
 
 			this.arrTextForDraw = ['p', 'i', 'n', 'e', 'a', 'p', 'p', 'l', 'e'];
 
@@ -77,18 +71,13 @@ WordTrack.TraceWord.prototype = {
 
 			this.arrApprovedNumberHover = [this.imgOne, this.imgTwo, this.imgFour, this.imgFive, this.imgSix, this.imgSeven];
 
+			//init word p first
+			this.initWord('p');
+
 			//enable input all number
 			this.enableInputAllNumber(true);
 
 			this.imgOne.events.onInputDown.add(this.listenerDrawingImgClicked, this);
-			this.imgTwo.events.onInputDown.add(this.listenerDrawingImgClicked, this);
-			this.imgThree.events.onInputDown.add(this.listenerDrawingImgClicked, this);
-			this.imgFour.events.onInputDown.add(this.listenerDrawingImgClicked, this);
-			this.imgFive.events.onInputDown.add(this.listenerDrawingImgClicked, this);
-			this.imgSix.events.onInputDown.add(this.listenerDrawingImgClicked, this);
-			this.imgSeven.events.onInputDown.add(this.listenerDrawingImgClicked, this);
-			this.imgEight.events.onInputDown.add(this.listenerDrawingImgClicked, this);
-
 			this.imgTwo.events.onInputOver.add(this.over, this);
 			this.imgThree.events.onInputOver.add(this.over, this);
 			this.imgFour.events.onInputOver.add(this.over, this);
@@ -97,127 +86,29 @@ WordTrack.TraceWord.prototype = {
 			this.imgSeven.events.onInputOver.add(this.over, this);
 			this.imgEight.events.onInputOver.add(this.over, this);
 
-			this.tween = this.add.tween(this.imgOne).to( { alpha: 0.2 }, this.speedNumber, "Linear", true ,0 , -1 , true);
-
-			//add group lines
-			this.groupLines = this.add.group();
-
-			//init word p first
-			this.initWord('p');
-
-			this.tmp = this.imgOne;
-			this.targetImg = this.imgTwo;
+			this.bmd = this.add.bitmapData(800, 600);
+			this.add.sprite(0, 0, this.bmd);
+		  this.input.addMoveCallback(this.paint, this);
 	},
 
-	over: function(obj) {
-			if(!this.startDrawing || obj != this.targetImg) {
-					return;
-			}
-
-			// this.tmp.visible = false;
-			this.tween.stop();
-			obj.alpha = 1;
-			if(this.checkDrawing) {
-					this.lineDrawing.height = Math.sqrt((obj.x - this.lineDrawing.x) * (obj.x - this.lineDrawing.x)
-																				+ (obj.y - this.lineDrawing.y) * (obj.y - this.lineDrawing.y));
-					// this.lineDrawing.rotation = this.physics.arcade.angleBetween(this.lineDrawing, obj) - 3.14/2;
-			}
-
-			// image eight stop drawing
-			if(obj == this.imgEight) {
-					this.startDrawing = false;
-					this.checkDrawing = false;
-					this.initWord('i');
-					return;
-			}
-
-			switch (obj) {
-				case this.imgTwo:
-					this.targetImg = this.imgThree;
-					break;
-				case this.imgThree:
-					this.targetImg = this.imgFour;
-					break;
-				case this.imgFour:
-					this.targetImg = this.imgFive;
-					break;
-				case this.imgFive:
-					this.targetImg = this.imgSix;
-					break;
-				case this.imgSix:
-					this.targetImg = this.imgSeven;
-					break;
-				case this.imgSeven:
-					this.targetImg = this.imgEight;
-					break;
-			}
-
-			this.tween = this.add.tween(this.targetImg).to( { alpha: 0.2 }, this.speedNumber, "Linear", true ,0 , -1 , true);
-
-			// for(var i = 0 ; i < this.arrApprovedNumberHover.length ; i++) {
-			// 		if(obj == this.arrApprovedNumberHover[i]){
-			// 				this.lineDrawing = this.groupLines.create(obj.x, obj.y, 'line');
-			// 				this.lineDrawing.width = this.lineWidth;
-			// 				this.lineDrawing.height = 0;
-			// 				this.lineDrawing.alpha = this.lineAlpha;
-			// 				this.lineDrawing.anchor.setTo(0.5, 0.0);
-			// 				this.physics.arcade.enable(this.lineDrawing, Phaser.Physics.ARCADE);
-			// 				this.tmp = obj;
-			// 				if(this.startDrawing) {
-			// 						this.checkDrawing = true;
-			// 				}
-			// 				break;
-			// 		}
-			//
-			// 		this.checkDrawing = false;
-			// }
-
-			//remove event horver
-			//obj.inputEnabled = false;
-			this.tmp = obj;
-	},
-
-	listenerDrawingImgClicked: function(obj) {
-		console.log('click image');
-		if(obj == this.tmp) {
-				this.startDrawing = true;
-
-				// if(!this.checkDrawing) {
-						this.tween = this.add.tween(this.targetImg).to( { alpha: 0.2 }, this.speedNumber, "Linear", true ,0 , -1 , true);
-
-						this.lineDrawing = this.groupLines.create(obj.x, obj.y, 'line');
-						this.lineDrawing.width = this.lineWidth;
-						this.lineDrawing.height = 0;
-						this.lineDrawing.alpha = this.lineAlpha;
-						this.lineDrawing.anchor.setTo(0.5, 0.0);
-						this.physics.arcade.enable(this.lineDrawing, Phaser.Physics.ARCADE);
-
-						this.checkDrawing = true;
-				// }
+	paint: function(pointer, x, y) {
+		if (pointer.isDown)
+		{
+				this.bmd.circle(x, y, 10, '#FFCCCC');
 		}
 	},
 
-	update: function() {
-			if (this.checkDrawing && this.input.mousePointer.isDown)
-	 		{
-					// this.lineDrawing.rotation = this.physics.arcade.angleBetween(this.tmp, this.input.mousePointer) - 3.14/2;
-					this.lineDrawing.height = this.physics.arcade.distanceToPointer(this.tmp);
-					if(this.input.mousePointer.x < this.imgOne.x - this.boundSpaceDraw
-							|| this.input.mousePointer.x > this.imgOne.x + this.boundSpaceDraw) {
-									this.checkDrawing = false;
-					}
-			}else {
-					this.checkDrawing = false;
-					if(this.lineDrawing != undefined) {
-							var tweenRoolback = this.add.tween(this.lineDrawing).to( { height: this.tmp.y }, 100, "Linear", true ,0 , -1 , true);
-							tweenRoolback.onComplete.add(this.rollbackLine, this);
-					}
-			}
+	over: function(obj) {
 	},
 
-	rollbackLine: function() {
-			// this.lineDrawing.destroy();
-			// this.tween.stop();
+	listenerDrawingImgClicked: function(obj) {
+			this.tweenImgOne.pause();
+			obj.alpha = 1;
+			this.startDrawing = true;
+			//this.input.deleteMoveCallback(this.paint, this);
+	},
+
+	update: function() {
 	},
 
 	enableInputAllNumber: function(flag) {
@@ -252,9 +143,8 @@ WordTrack.TraceWord.prototype = {
 			jsonNumber = JSON.parse(this.jsonObjNumber);
 			console.log(jsonNumber.wordI[0].name);
 
-			this.groupLines.removeAll();
 			this.enableInputAllNumber(true);
-			this.tween = this.add.tween(this.imgOne).to( { alpha: 0.2 }, this.speedNumber, "Linear", true ,0 , -1 , true);
+			this.tweenImgOne = this.add.tween(this.imgOne).to( { alpha: 0.2 }, this.speedNumber, "Linear", true ,0 , -1 , true);
 			switch (word) {
 				case 'p':
 						this.imgAlphaBet.loadTexture("wordP");
