@@ -38,6 +38,7 @@ WordTrack.Preloader.prototype = {
 		this.load.image('tryagain' , 'img/tryagain.png');
 
 		this.load.image('pen' , 'img/pen.png');
+		this.load.image('welldone' , 'img/welldone.png');
 	},
 	create: function(){
 		// start the MainMenu state

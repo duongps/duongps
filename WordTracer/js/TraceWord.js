@@ -4,8 +4,10 @@ WordTrack.TraceWord = function(game){
 		this.btnNextWord
 		this.txtWellDone;
 		this.txtBadDraw;
+		this.imgStarWellDone;
 
 		this.imgAlphaBet;
+		this.iconPineapple;
 
 		this.imgOne;
 		this.imgTwo;
@@ -24,8 +26,8 @@ WordTrack.TraceWord = function(game){
 		this.arrTextForDraw;
 
 		this.bmd;
-
 		this.drawImage;
+		this.isDrawing = true;
 };
 
 WordTrack.TraceWord.prototype = {
@@ -57,13 +59,16 @@ WordTrack.TraceWord.prototype = {
 			this.txtBadDraw = this.add.text(570, 400, 'Bad Draw', {font: "24px Arial", fill: '#FFFFFF'});
 			this.txtBadDraw.visible = false;
 
+			this.imgStarWellDone = this.add.sprite(640, this.world.centerY, 'welldone');
+			this.imgStarWellDone.anchor.set(0.5);
+
 			this.arrTextForDraw = ['p', 'i', 'n', 'e', 'a', 'p', 'p', 'l', 'e'];
 
 			var graphics = this.add.graphics(0,0);
 	    graphics.beginFill(0xFFCC99);
 	    graphics.drawRect(230, 100, 300, 370);
 
-			this.game.add.image(240, 100, 'iconPineapple');
+			this.iconPineapple = this.game.add.image(240, 100, 'iconPineapple');
 
 			this.imgAlphaBet = this.game.add.image(this.world.centerX + 30, 130, 'wordP');
 			this.imgAlphaBet.anchor.setTo(0.5, 0);
@@ -125,17 +130,37 @@ WordTrack.TraceWord.prototype = {
 			this.imgEight.events.onInputOver.add(this.overNumber, this);
 	},
 
+	setVisibleAllImages: function(flag) {
+			this.imgAlphaBet.visible = flag;
+			this.iconPineapple.visible = flag;
+			this.imgOne.visible = flag;
+			this.imgTwo.visible = flag;
+			this.imgThree.visible = flag;
+			this.imgFour.visible = flag;
+			this.imgFive.visible = flag;
+			this.imgSix.visible = flag;
+			this.imgSeven.visible = flag;
+			this.imgEight.visible = flag;
+	},
+
 	actionOnClickDone: function() {
 			if(this.arrResult.length == 8){
 					console.log('well done');
 					this.btnDone.visible = false;
 					this.txtWellDone.visible = true;
 					this.btnNextWord.visible = true;
+					this.setVisibleAllImages(false);
+					this.add.tween(this.imgStarWellDone).to( { x: 640 }, 500, "Linear", true);
+					this.add.tween(this.imgStarWellDone.scale).to({x: 1.3, y: 1.3}, 700, "Linear", true, 0 , -1, true);
+
+					this.isDrawing = false;
 			}else {
 					console.log('bad draw');
 					this.btnDone.visible = false;
 					this.txtBadDraw.visible = true;
 					this.btnTryAgain.visible = true;
+
+					this.isDrawing = false;
 			}
 	},
 
@@ -147,6 +172,8 @@ WordTrack.TraceWord.prototype = {
 			this.btnDone.visible = true;
 			this.txtBadDraw.visible = false;
 			this.btnTryAgain.visible = false;
+
+			this.isDrawing = true;
 	},
 
 	actionOnClickNextWord: function() {
@@ -158,6 +185,8 @@ WordTrack.TraceWord.prototype = {
 			this.btnDone.visible = true;
 			this.txtWellDone.visible = false;
 			this.btnNextWord.visible = false;
+
+			this.isDrawing = true;
 	},
 
 	onOverButton: function() {
@@ -165,13 +194,17 @@ WordTrack.TraceWord.prototype = {
 	},
 
 	onOutButton: function() {
-			this.input.addMoveCallback(this.paint, this);
+			if(this.isDrawing) {
+					this.input.addMoveCallback(this.paint, this);
+			}else {
+					this.input.deleteMoveCallback(this.paint, this);
+			}
 	},
 
 	paint: function(pointer, x, y) {
 			if (pointer.isDown)
 			{
-					this.bmd.circle(x, y, 10, '#FFCCCC');
+					this.bmd.circle(x, y, 10, '#00CC00');
 			}
 	},
 
@@ -251,5 +284,8 @@ WordTrack.TraceWord.prototype = {
 					break;
 				default:
 			}
+
+			this.setVisibleAllImages(true);
+			this.imgStarWellDone.x = 850;
 	}
 };
