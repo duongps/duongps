@@ -1,4 +1,6 @@
 WordTrack.TraceWord = function(game){
+		this.arrTextForDraw = ['P', 'I', 'N', 'E', 'A', 'P', 'P', 'L', 'E'];
+
 		this.btnDone;
 		this.btnTryAgain;
 		this.btnNextWord
@@ -62,8 +64,6 @@ WordTrack.TraceWord.prototype = {
 			this.imgStarWellDone = this.add.sprite(640, this.world.centerY, 'welldone');
 			this.imgStarWellDone.anchor.set(0.5);
 
-			this.arrTextForDraw = ['p', 'i', 'n', 'e', 'a', 'p', 'p', 'l', 'e'];
-
 			var graphics = this.add.graphics(0,0);
 	    graphics.beginFill(0xFFCC99);
 	    graphics.drawRect(230, 100, 300, 370);
@@ -91,7 +91,7 @@ WordTrack.TraceWord.prototype = {
 			this.imgEight.anchor.set(0.5);
 
 			//init word p first
-			this.initWord('p');
+			this.initWord(this.arrTextForDraw.shift());
 
 			//enable input all number
 			this.addEventAllNumbers();
@@ -180,7 +180,7 @@ WordTrack.TraceWord.prototype = {
 			this.arrResult = [];
 			this.bmd.clear();
 			this.input.addMoveCallback(this.paint, this);
-			this.initWord('i');
+			this.initWord(this.arrTextForDraw.shift());
 
 			this.btnDone.visible = true;
 			this.txtWellDone.visible = false;
@@ -234,7 +234,16 @@ WordTrack.TraceWord.prototype = {
 																	{"name": "imgFive", "x": 400, "y":  290},\
 																	{"name": "imgSix", "x": 320, "y":  335},\
 																	{"name": "imgSeven", "x": 400, "y":  335},\
-																	{"name": "imgEight", "x": 480, "y":  335}]}',
+																	{"name": "imgEight", "x": 480, "y":  335}],\
+														"wordN":[{"name": "imgOne", "x": 330 , "y": 150},\
+																	{"name": "imgTwo", "x": 330, "y":  266},\
+																	{"name": "imgThree", "x": 330, "y":  383},\
+																	{"name": "imgFour", "x": 355, "y":  170},\
+																	{"name": "imgFive", "x": 455, "y":  363},\
+																	{"name": "imgSix", "x": 480, "y":  150},\
+																	{"name": "imgSeven", "x": 480, "y":  266},\
+																	{"name": "imgEight", "x": 480, "y":  383}]\
+																}',
 			jsonNumber = JSON.parse(this.jsonObjNumber);
 			console.log(jsonNumber.wordI[0].name);
 
@@ -280,7 +289,84 @@ WordTrack.TraceWord.prototype = {
 						this.imgEight.y = jsonNumber.wordI[7].y;
 					break;
 				case 'n':
-						this.initWordN();
+						this.imgAlphaBet.loadTexture("wordN");
+
+						this.imgOne.x = jsonNumber.wordN[0].x;
+						this.imgOne.y = jsonNumber.wordN[0].y;
+						this.imgTwo.x = jsonNumber.wordN[1].x;
+						this.imgTwo.y = jsonNumber.wordN[1].y;
+						this.imgThree.x = jsonNumber.wordN[2].x;
+						this.imgThree.y = jsonNumber.wordN[2].y;
+						this.imgFour.x = jsonNumber.wordN[3].x;;
+						this.imgFour.y = jsonNumber.wordN[3].y;
+						this.imgFive.x = jsonNumber.wordN[4].x;;
+						this.imgFive.y = jsonNumber.wordN[4].y;
+						this.imgSix.x = jsonNumber.wordN[5].x;;
+						this.imgSix.y = jsonNumber.wordN[5].y;
+						this.imgSeven.x = jsonNumber.wordN[6].x;;
+						this.imgSeven.y = jsonNumber.wordN[6].y;
+						this.imgEight.x = jsonNumber.wordN[7].x;;
+						this.imgEight.y = jsonNumber.wordN[7].y;
+					break;
+				case 'a':
+						this.imgAlphaBet.loadTexture("wordA");
+
+						this.imgOne.x = jsonNumber.wordN[0].x;
+						this.imgOne.y = jsonNumber.wordN[0].y;
+						this.imgTwo.x = jsonNumber.wordN[1].x;
+						this.imgTwo.y = jsonNumber.wordN[1].y;
+						this.imgThree.x = jsonNumber.wordN[2].x;
+						this.imgThree.y = jsonNumber.wordN[2].y;
+						this.imgFour.x = jsonNumber.wordN[3].x;;
+						this.imgFour.y = jsonNumber.wordN[3].y;
+						this.imgFive.x = jsonNumber.wordN[4].x;;
+						this.imgFive.y = jsonNumber.wordN[4].y;
+						this.imgSix.x = jsonNumber.wordN[5].x;;
+						this.imgSix.y = jsonNumber.wordN[5].y;
+						this.imgSeven.x = jsonNumber.wordN[6].x;;
+						this.imgSeven.y = jsonNumber.wordN[6].y;
+						this.imgEight.x = jsonNumber.wordN[7].x;;
+						this.imgEight.y = jsonNumber.wordN[7].y;
+					break;
+				case 'l':
+						this.imgAlphaBet.loadTexture("wordL");
+
+						this.imgOne.x = jsonNumber.wordN[0].x;
+						this.imgOne.y = jsonNumber.wordN[0].y;
+						this.imgTwo.x = jsonNumber.wordN[1].x;
+						this.imgTwo.y = jsonNumber.wordN[1].y;
+						this.imgThree.x = jsonNumber.wordN[2].x;
+						this.imgThree.y = jsonNumber.wordN[2].y;
+						this.imgFour.x = jsonNumber.wordN[3].x;;
+						this.imgFour.y = jsonNumber.wordN[3].y;
+						this.imgFive.x = jsonNumber.wordN[4].x;;
+						this.imgFive.y = jsonNumber.wordN[4].y;
+						this.imgSix.x = jsonNumber.wordN[5].x;;
+						this.imgSix.y = jsonNumber.wordN[5].y;
+						this.imgSeven.x = jsonNumber.wordN[6].x;;
+						this.imgSeven.y = jsonNumber.wordN[6].y;
+						this.imgEight.x = jsonNumber.wordN[7].x;;
+						this.imgEight.y = jsonNumber.wordN[7].y;
+					break;
+				case 'e':
+						this.imgAlphaBet.loadTexture("wordE");
+
+						this.imgOne.x = jsonNumber.wordN[0].x;
+						this.imgOne.y = jsonNumber.wordN[0].y;
+						this.imgTwo.x = jsonNumber.wordN[1].x;
+						this.imgTwo.y = jsonNumber.wordN[1].y;
+						this.imgThree.x = jsonNumber.wordN[2].x;
+						this.imgThree.y = jsonNumber.wordN[2].y;
+						this.imgFour.x = jsonNumber.wordN[3].x;;
+						this.imgFour.y = jsonNumber.wordN[3].y;
+						this.imgFive.x = jsonNumber.wordN[4].x;;
+						this.imgFive.y = jsonNumber.wordN[4].y;
+						this.imgSix.x = jsonNumber.wordN[5].x;;
+						this.imgSix.y = jsonNumber.wordN[5].y;
+						this.imgSeven.x = jsonNumber.wordN[6].x;;
+						this.imgSeven.y = jsonNumber.wordN[6].y;
+						this.imgEight.x = jsonNumber.wordN[7].x;;
+						this.imgEight.y = jsonNumber.wordN[7].y;
 					break;
 				default:
 			}
