@@ -10,6 +10,7 @@
 	<script src="js/MainMenu.js"></script>
 	<script src="js/Game.js"></script>
 	<script src="js/TraceWord.js"></script>
+	<script src="js/WordDone.js"></script>
 </head>
 <body>
 <script>
@@ -22,6 +23,7 @@
 	game.state.add('MainMenu', WordTrack.MainMenu);
 	game.state.add('Game', WordTrack.Game);
 	game.state.add('TraceWord', WordTrack.TraceWord);
+	game.state.add('WordDone', WordTrack.WordDone);
 	// start the Boot state
 	game.state.start('Boot');
 })();

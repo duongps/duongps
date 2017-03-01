@@ -1,6 +1,6 @@
 WordTrack.TraceWord = function(game){
 		this.arrTextForDraw = ['P', 'I', 'N', 'E', 'A', 'P', 'P', 'L', 'E'];
-
+		//this.arrTextForDraw = ['P'];
 		this.btnDone;
 		this.btnTryAgain;
 		this.btnNextWord
@@ -186,6 +186,10 @@ WordTrack.TraceWord.prototype = {
 	},
 
 	actionOnClickNextWord: function() {
+			if(this.arrTextForDraw.length == 0) {
+					this.state.start('WordDone');
+			}
+
 			this.arrResult = [];
 			this.bmd.clear();
 			this.input.addMoveCallback(this.paint, this);
