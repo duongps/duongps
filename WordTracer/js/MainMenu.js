@@ -1,5 +1,6 @@
 WordTrack.MainMenu = function(game){
 		this.wordDraw;
+		this.imageName;
 		//define image
 		this.imgNo1;
 		this.imgNo2;
@@ -34,10 +35,10 @@ WordTrack.MainMenu.prototype = {
 			this.imgNo1 = this.add.image(imageNo1X , 280, 'pineapple');
 			this.imgNo1.anchor.set(0.5);
 			this.imgNo1.inputEnabled = true;
-			this.imgNo2 = this.add.image(imageNo2X, 280, 'pineapple');
+			this.imgNo2 = this.add.image(imageNo2X, 280, 'carrot');
 			this.imgNo2.anchor.set(0.5);
 			this.imgNo2.inputEnabled = true;
-			this.imgNo3 = this.add.image(imageNo3X, 280, 'pineapple');
+			this.imgNo3 = this.add.image(imageNo3X, 280, 'carrot');
 			this.imgNo3.anchor.set(0.5);
 			this.imgNo3.inputEnabled = true;
 
@@ -74,15 +75,18 @@ WordTrack.MainMenu.prototype = {
 			switch (obj) {
 				case this.imgNo1:
 					this.tick1.visible = true;
-					this.wordDraw = 'P';
+					this.wordDraw = 'PINEAPPLE';
+					this.imageName = 'pineapple';
 					break;
 				case this.imgNo2:
 					this.tick2.visible = true;
-					this.wordDraw = 'PINEAPPLE';
+					this.wordDraw = 'CARROT';
+					this.imageName = 'carrot';
 					break;
 				case this.imgNo3:
 					this.tick3.visible = true;
-					this.wordDraw = 'PINEAPPLE';
+					this.wordDraw = 'CARROT';
+					this.imageName = 'carrot';
 					break;
 				default:
 			}

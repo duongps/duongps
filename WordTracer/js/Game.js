@@ -2,14 +2,17 @@ WordTrack.Game = function(game){};
 
 WordTrack.Game.prototype = {
 	create: function(){
+			var wordDraw = this.state.states['MainMenu'].wordDraw;
+			var imageName = this.state.states['MainMenu'].imageName;
+			
 			//add text
-			var textWordTrace = this.add.text(this.world.centerX,10,'Word	Tracer', {font: "24px Arial", fill: '#FFFFFF'});
+			var textWordTrace = this.add.text(this.world.centerX, 10, 'Word	Tracer', {font: "24px Arial", fill: '#FFFFFF'});
 			textWordTrace.anchor.setTo(0.5, 0);
 
-			var textLearnWord = this.add.text(this.world.centerX,50,'No.1	word', {font: "32px Arial", fill: '#FFFFFF'});
+			var textLearnWord = this.add.text(this.world.centerX, 50, wordDraw, {font: "32px Arial", fill: '#FFFFFF'});
 			textLearnWord.anchor.setTo(0.5, 0);
 
-			var img = this.game.add.image(this.world.centerX, 130, 'pineapple');
+			var img = this.game.add.image(this.world.centerX, 130, imageName);
 			img.anchor.set(0.5, 0);
 
 			var btn = this.add.button(this.world.centerX, 450, 'btnReady', this.readyGame, this);
