@@ -81,7 +81,7 @@ WordTrack.TraceWord.prototype = {
 
 			this.iconPineapple = this.game.add.image(255, 75, 'iconPineapple');
 
-			this.imgAlphaBet = this.game.add.image(this.world.centerX, 65, 'wordP');
+			this.imgAlphaBet = this.game.add.image(this.world.centerX, 65, 'P');
 			this.imgAlphaBet.anchor.setTo(0.5, 0);
 
 			this.imgOne = this.add.sprite(0, 0, 'img1');
@@ -102,7 +102,7 @@ WordTrack.TraceWord.prototype = {
 			this.imgEight.anchor.set(0.5);
 			this.imgNine = this.add.sprite(0, 0, 'img9');
 			this.imgNine.anchor.set(0.5);
-			this.imgNine.visible = false;
+			this.setVisibleAllImages(false);
 
 			//store numbers 1->9 to array
 			this.arrImgNumbers.push(this.imgOne, this.imgTwo, this.imgThree, this.imgFour,
@@ -152,8 +152,6 @@ WordTrack.TraceWord.prototype = {
 	},
 
 	setVisibleAllImages: function(flag) {
-			this.imgAlphaBet.visible = flag;
-			this.iconPineapple.visible = flag;
 			this.imgOne.visible = flag;
 			this.imgTwo.visible = flag;
 			this.imgThree.visible = flag;
@@ -172,6 +170,8 @@ WordTrack.TraceWord.prototype = {
 					this.txtWellDone.visible = true;
 					this.btnNextWord.visible = true;
 					this.setVisibleAllImages(false);
+					this.imgAlphaBet.visible = false;
+					this.iconPineapple.visible = false;
 					this.add.tween(this.imgStarWellDone).to( { x: 640 }, 500, "Linear", true);
 					this.add.tween(this.imgStarWellDone.scale).to({x: 1.3, y: 1.3}, 700, "Linear", true, 0 , -1, true);
 

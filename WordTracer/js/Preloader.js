@@ -47,16 +47,26 @@ WordTrack.Preloader = function(game){
 																{"name": "imgThree", "x": 305, "y": 250},\
 																{"name": "imgFour", "x": 350, "y":  350},\
 																{"name": "imgFive", "x": 450, "y":  360}],\
-													"R":[{"name": "imgOne", "x": 360 , "y": 160},\
-																{"name": "imgTwo", "x": 360, "y":  230},\
-																{"name": "imgThree", "x": 360, "y": 302},\
-																{"name": "imgFour", "x": 390, "y":  302},\
-																{"name": "imgFive", "x": 455, "y":  302}],\
-													"T":[{"name": "imgOne", "x": 360 , "y": 160},\
-																{"name": "imgTwo", "x": 360, "y":  230},\
-																{"name": "imgThree", "x": 360, "y": 302},\
-																{"name": "imgFour", "x": 390, "y":  302},\
-																{"name": "imgFive", "x": 455, "y":  302}]\
+													"R":[{"name": "imgOne", "x": 325 , "y": 145},\
+																{"name": "imgTwo", "x": 325, "y":  255},\
+																{"name": "imgThree", "x": 325, "y": 360},\
+																{"name": "imgFour", "x": 355, "y":  139},\
+																{"name": "imgFive", "x": 435, "y":  185},\
+																{"name": "imgSix", "x": 355, "y":  257},\
+																{"name": "imgSeven", "x": 410, "y":  275},\
+																{"name": "imgEight", "x": 442, "y":  365}],\
+													"T":[{"name": "imgOne", "x": 310 , "y": 141},\
+																{"name": "imgTwo", "x": 375, "y":  141},\
+																{"name": "imgThree", "x": 440, "y": 141},\
+																{"name": "imgFour", "x": 375, "y":  170},\
+																{"name": "imgFive", "x": 375, "y":  265},\
+																{"name": "imgSix", "x": 375, "y":  362}],\
+													"O":[{"name": "imgOne", "x": 380 , "y": 140},\
+																{"name": "imgTwo", "x": 460, "y":  200},\
+																{"name": "imgThree", "x": 460, "y": 300},\
+																{"name": "imgFour", "x": 380, "y":  367},\
+																{"name": "imgFive", "x": 295, "y":  202},\
+																{"name": "imgSix", "x": 295, "y":  302}]\
 															}';
 };
 
