@@ -75,7 +75,7 @@ WordTrack.MainMenu.prototype = {
 			switch (obj) {
 				case this.imgNo1:
 					this.tick1.visible = true;
-					this.wordDraw = 'PINEAPPLE';
+					this.wordDraw = 'P';
 					this.imageName = 'pineapple';
 					break;
 				case this.imgNo2:
