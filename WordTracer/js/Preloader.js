@@ -45,6 +45,9 @@ WordTrack.Preloader.prototype = {
 
 		this.load.image('pineapple_done' , 'img/pineapple_done.png');
 		this.load.image('btnnextword' , 'img/btnnextword.png');
+
+		//load json data
+		//this.load.text('dataNumbers', '/my/numbers.json');
 	},
 	create: function(){
 		// start the MainMenu state
