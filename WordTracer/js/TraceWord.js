@@ -1,5 +1,5 @@
 WordTrack.TraceWord = function(game){
-		this.wordDraw = 'PINEAPPLE';
+		this.wordDraw;
 		this.wordDrawing;
 		this.arrTextForDraw = [];
 		//this.arrTextForDraw = ['P'];
@@ -40,6 +40,7 @@ WordTrack.TraceWord = function(game){
 
 WordTrack.TraceWord.prototype = {
 	create: function(){
+			this.wordDraw = this.state.states['MainMenu'].wordDraw;
 			this.arrTextForDraw = Array.from(this.wordDraw);
 			//add text
 			var textWordTrace = this.add.text(this.world.centerX,10,'Word	Tracer', {font: "24px Arial", fill: '#FFFFFF'});
@@ -298,7 +299,7 @@ WordTrack.TraceWord.prototype = {
 			this.imgAlphaBet.loadTexture(word);
 			this.imgAlphaBet.visible = true;
 			this.iconPineapple.visible = true;
-			
+
 			//add color for word drawing
 			this.wordDrawing.addColor('#00CC00', this.wordDraw.indexOf(word));
 			this.wordDrawing.addColor('#FFFFFF', this.wordDraw.indexOf(word) + 1);

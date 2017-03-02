@@ -11,7 +11,7 @@ WordTrack.Preloader.prototype = {
 		this.load.image('no1', 'img/no1.png');
 		this.load.image('no2', 'img/no2.png');
 		this.load.image('no3', 'img/no3.png');
-
+		this.load.image('tick', 'img/tick.png');
 		this.load.image('P', 'img/wordp.png');
 		this.load.image('I', 'img/wordi.png');
 		this.load.image('N', 'img/wordn.png');
