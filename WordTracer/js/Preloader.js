@@ -32,18 +32,10 @@ WordTrack.Preloader.prototype = {
 		this.load.image('img7', 'img/7.png');
 		this.load.image('img8', 'img/8.png');
 		this.load.image('img9', 'img/9.png');
-
-		//add image line
-		this.load.image('line' , 'img/fusia.png');
-
 		this.load.image('done' , 'img/done.png');
 		this.load.image('nextword' , 'img/nextword.png');
 		this.load.image('tryagain' , 'img/tryagain.png');
-
-		this.load.image('pen' , 'img/pen.png');
 		this.load.image('welldone' , 'img/welldone.png');
-
-		this.load.image('pineapple_done' , 'img/pineapple_done.png');
 		this.load.image('btnnextword' , 'img/btnnextword.png');
 
 		//load json data

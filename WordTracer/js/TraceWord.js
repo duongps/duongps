@@ -199,20 +199,21 @@ WordTrack.TraceWord.prototype = {
 	},
 
 	actionOnClickNextWord: function() {
+			console.log('this.arrTextForDraw: ' + this.arrTextForDraw);
 			if(this.arrTextForDraw.length == 0) {
 					this.state.start('WordDone');
+			}else {
+					this.arrResult = [];
+					this.bmd.clear();
+					this.input.addMoveCallback(this.paint, this);
+					this.initWord(this.arrTextForDraw.shift());
+
+					this.btnDone.visible = true;
+					this.txtWellDone.visible = false;
+					this.btnNextWord.visible = false;
+
+					this.isDrawing = true;
 			}
-
-			this.arrResult = [];
-			this.bmd.clear();
-			this.input.addMoveCallback(this.paint, this);
-			this.initWord(this.arrTextForDraw.shift());
-
-			this.btnDone.visible = true;
-			this.txtWellDone.visible = false;
-			this.btnNextWord.visible = false;
-
-			this.isDrawing = true;
 	},
 
 	onOverButton: function() {
@@ -302,7 +303,9 @@ WordTrack.TraceWord.prototype = {
 
 			//add color for word drawing
 			this.wordDrawing.addColor('#00CC00', this.wordDraw.indexOf(word));
-			this.wordDrawing.addColor('#FFFFFF', this.wordDraw.indexOf(word) + 1);
+			if(this.wordDraw.length > 1) {
+					this.wordDrawing.addColor('#FFFFFF', this.wordDraw.indexOf(word) + 1);
+			}
 
 			console.log('jsonNumber[word].length = ' + jsonNumber[word].length);
 			this.totalNumbers = jsonNumber[word].length;
