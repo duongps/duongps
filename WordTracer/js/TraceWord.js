@@ -21,6 +21,8 @@ WordTrack.TraceWord = function(game){
 		this.imgEight;
 		this.imgNine;
 
+		this.arrImgNumbers = [];
+
 		this.arrResult = [];
 		this.totalNumbers;
 
@@ -94,6 +96,10 @@ WordTrack.TraceWord.prototype = {
 			this.imgNine = this.add.sprite(0, 0, 'img9');
 			this.imgNine.anchor.set(0.5);
 			this.imgNine.visible = false;
+
+			//store numbers 1->9 to array
+			this.arrImgNumbers.push(this.imgOne, this.imgTwo, this.imgThree, this.imgFour,
+				 													this.imgFive, this.imgSix, this.imgSeven, this.imgEight, this.imgNine);
 
 			//init word p first
 			this.initWord(this.arrTextForDraw.shift());
@@ -231,8 +237,9 @@ WordTrack.TraceWord.prototype = {
 	},
 
 	initWord: function(word){
+			console.log('load word: ' + word);
 			//local web can not use json file so that temparory use local data
-			this.jsonObjNumber = '{"wordP":[{"name": "imgOne", "x": 327 , "y": 147},\
+			this.jsonObjNumber = '{"P":[{"name": "imgOne", "x": 327 , "y": 147},\
 																	{"name": "imgTwo", "x": 327, "y":  310},\
 																	{"name": "imgThree", "x": 327, "y":  427},\
 																	{"name": "imgFour", "x": 360, "y":  147},\
@@ -240,7 +247,7 @@ WordTrack.TraceWord.prototype = {
 																	{"name": "imgSix", "x": 482, "y":  220},\
 																	{"name": "imgSeven", "x": 440, "y":  297},\
 																	{"name": "imgEight", "x": 360, "y":  310}],\
-														"wordI":[{"name": "imgOne", "x": 320 , "y": 155},\
+														"I":[{"name": "imgOne", "x": 320 , "y": 155},\
 																	{"name": "imgTwo", "x": 400, "y":  155},\
 																	{"name": "imgThree", "x": 480, "y":  155},\
 																	{"name": "imgFour", "x": 400, "y":  190},\
@@ -248,7 +255,7 @@ WordTrack.TraceWord.prototype = {
 																	{"name": "imgSix", "x": 320, "y":  335},\
 																	{"name": "imgSeven", "x": 400, "y":  335},\
 																	{"name": "imgEight", "x": 480, "y":  335}],\
-														"wordN":[{"name": "imgOne", "x": 330 , "y": 150},\
+														"N":[{"name": "imgOne", "x": 330 , "y": 150},\
 																	{"name": "imgTwo", "x": 330, "y":  266},\
 																	{"name": "imgThree", "x": 330, "y":  383},\
 																	{"name": "imgFour", "x": 355, "y":  170},\
@@ -256,7 +263,7 @@ WordTrack.TraceWord.prototype = {
 																	{"name": "imgSix", "x": 480, "y":  150},\
 																	{"name": "imgSeven", "x": 480, "y":  266},\
 																	{"name": "imgEight", "x": 480, "y":  383}],\
-														"wordA":[{"name": "imgOne", "x": 330 , "y": 325},\
+														"A":[{"name": "imgOne", "x": 330 , "y": 325},\
 																	{"name": "imgTwo", "x": 360, "y":  240},\
 																	{"name": "imgThree", "x": 390, "y":  160},\
 																	{"name": "imgFour", "x": 425, "y":  160},\
@@ -264,7 +271,7 @@ WordTrack.TraceWord.prototype = {
 																	{"name": "imgSix", "x": 480, "y":  325},\
 																	{"name": "imgSeven", "x": 380, "y":  290},\
 																	{"name": "imgEight", "x": 430, "y":  290}],\
-														"wordE":[{"name": "imgOne", "x": 320 , "y": 160},\
+														"E":[{"name": "imgOne", "x": 320 , "y": 160},\
 																	{"name": "imgTwo", "x": 320, "y":  275},\
 																	{"name": "imgThree", "x": 320, "y":  375},\
 																	{"name": "imgFour", "x": 350, "y":  160},\
@@ -273,155 +280,26 @@ WordTrack.TraceWord.prototype = {
 																	{"name": "imgSeven", "x": 490, "y":  275},\
 																	{"name": "imgEight", "x": 350, "y":  375},\
 																	{"name": "imgNine", "x": 490, "y":  375}],\
-														"wordL":[{"name": "imgOne", "x": 360 , "y": 160},\
+														"L":[{"name": "imgOne", "x": 360 , "y": 160},\
 																	{"name": "imgTwo", "x": 360, "y":  230},\
 																	{"name": "imgThree", "x": 360, "y": 302},\
 																	{"name": "imgFour", "x": 390, "y":  302},\
 																	{"name": "imgFive", "x": 455, "y":  302}]\
 																}',
 			jsonNumber = JSON.parse(this.jsonObjNumber);
-			console.log(jsonNumber.wordI[0].name);
 
-			this.setVisibleAllImages(true);
 			this.imgStarWellDone.x = 850;
+			this.imgAlphaBet.loadTexture(word);
+			this.imgAlphaBet.visible = true;
+			this.iconPineapple.visible = true;
 
-			switch (word) {
-				case 'P':
-						this.imgAlphaBet.loadTexture("wordP");
+			console.log('jsonNumber[word].length = ' + jsonNumber[word].length);
+			this.totalNumbers = jsonNumber[word].length;
 
-						this.imgOne.x = jsonNumber.wordP[0].x;
-						this.imgOne.y = jsonNumber.wordP[0].y;
-						this.imgTwo.x = jsonNumber.wordP[1].x;
-						this.imgTwo.y = jsonNumber.wordP[1].y;
-						this.imgThree.x = jsonNumber.wordP[2].x;
-						this.imgThree.y = jsonNumber.wordP[2].y;
-						this.imgFour.x = jsonNumber.wordP[3].x;;
-						this.imgFour.y = jsonNumber.wordP[3].y;
-						this.imgFive.x = jsonNumber.wordP[4].x;;
-						this.imgFive.y = jsonNumber.wordP[4].y;
-						this.imgSix.x = jsonNumber.wordP[5].x;;
-						this.imgSix.y = jsonNumber.wordP[5].y;
-						this.imgSeven.x = jsonNumber.wordP[6].x;;
-						this.imgSeven.y = jsonNumber.wordP[6].y;
-						this.imgEight.x = jsonNumber.wordP[7].x;;
-						this.imgEight.y = jsonNumber.wordP[7].y;
-
-						this.imgNine.visible = false;
-						this.totalNumbers = 8;
-					break;
-				case 'I':
-						this.imgAlphaBet.loadTexture("wordI");
-
-						this.imgOne.x = jsonNumber.wordI[0].x;
-						this.imgOne.y = jsonNumber.wordI[0].y;
-						this.imgTwo.x = jsonNumber.wordI[1].x;
-						this.imgTwo.y = jsonNumber.wordI[1].y;
-						this.imgThree.x = jsonNumber.wordI[2].x;
-						this.imgThree.y = jsonNumber.wordI[2].y;
-						this.imgFour.x = jsonNumber.wordI[3].x;;
-						this.imgFour.y = jsonNumber.wordI[3].y;
-						this.imgFive.x = jsonNumber.wordI[4].x;;
-						this.imgFive.y = jsonNumber.wordI[4].y;
-						this.imgSix.x = jsonNumber.wordI[5].x;;
-						this.imgSix.y = jsonNumber.wordI[5].y;
-						this.imgSeven.x = jsonNumber.wordI[6].x;;
-						this.imgSeven.y = jsonNumber.wordI[6].y;
-						this.imgEight.x = jsonNumber.wordI[7].x;;
-						this.imgEight.y = jsonNumber.wordI[7].y;
-
-						this.imgNine.visible = false;
-						this.totalNumbers = 8;
-					break;
-				case 'N':
-						this.imgAlphaBet.loadTexture("wordN");
-
-						this.imgOne.x = jsonNumber.wordN[0].x;
-						this.imgOne.y = jsonNumber.wordN[0].y;
-						this.imgTwo.x = jsonNumber.wordN[1].x;
-						this.imgTwo.y = jsonNumber.wordN[1].y;
-						this.imgThree.x = jsonNumber.wordN[2].x;
-						this.imgThree.y = jsonNumber.wordN[2].y;
-						this.imgFour.x = jsonNumber.wordN[3].x;;
-						this.imgFour.y = jsonNumber.wordN[3].y;
-						this.imgFive.x = jsonNumber.wordN[4].x;;
-						this.imgFive.y = jsonNumber.wordN[4].y;
-						this.imgSix.x = jsonNumber.wordN[5].x;;
-						this.imgSix.y = jsonNumber.wordN[5].y;
-						this.imgSeven.x = jsonNumber.wordN[6].x;;
-						this.imgSeven.y = jsonNumber.wordN[6].y;
-						this.imgEight.x = jsonNumber.wordN[7].x;;
-						this.imgEight.y = jsonNumber.wordN[7].y;
-
-						this.imgNine.visible = false;
-						this.totalNumbers = 8;
-					break;
-				case 'A':
-						this.imgAlphaBet.loadTexture("wordA");
-
-						this.imgOne.x = jsonNumber.wordA[0].x;
-						this.imgOne.y = jsonNumber.wordA[0].y;
-						this.imgTwo.x = jsonNumber.wordA[1].x;
-						this.imgTwo.y = jsonNumber.wordA[1].y;
-						this.imgThree.x = jsonNumber.wordA[2].x;
-						this.imgThree.y = jsonNumber.wordA[2].y;
-						this.imgFour.x = jsonNumber.wordA[3].x;;
-						this.imgFour.y = jsonNumber.wordA[3].y;
-						this.imgFive.x = jsonNumber.wordA[4].x;;
-						this.imgFive.y = jsonNumber.wordA[4].y;
-						this.imgSix.x = jsonNumber.wordA[5].x;;
-						this.imgSix.y = jsonNumber.wordA[5].y;
-						this.imgSeven.x = jsonNumber.wordA[6].x;;
-						this.imgSeven.y = jsonNumber.wordA[6].y;
-						this.imgEight.x = jsonNumber.wordA[7].x;;
-						this.imgEight.y = jsonNumber.wordA[7].y;
-
-						this.imgNine.visible = false;
-						this.totalNumbers = 8;
-					break;
-				case 'L':
-						this.imgAlphaBet.loadTexture("wordL");
-
-						this.imgOne.x = jsonNumber.wordL[0].x;
-						this.imgOne.y = jsonNumber.wordL[0].y;
-						this.imgTwo.x = jsonNumber.wordL[1].x;
-						this.imgTwo.y = jsonNumber.wordL[1].y;
-						this.imgThree.x = jsonNumber.wordL[2].x;
-						this.imgThree.y = jsonNumber.wordL[2].y;
-						this.imgFour.x = jsonNumber.wordL[3].x;;
-						this.imgFour.y = jsonNumber.wordL[3].y;
-						this.imgFive.x = jsonNumber.wordL[4].x;;
-						this.imgFive.y = jsonNumber.wordL[4].y;
-
-						this.imgSix.visible = false;
-						this.imgSeven.visible = false;
-						this.imgEight.visible = false;
-						this.imgNine.visible = false;
-						this.totalNumbers = 5;
-					break;
-				case 'E':
-						this.imgAlphaBet.loadTexture("wordE");
-
-						this.imgOne.x = jsonNumber.wordE[0].x;
-						this.imgOne.y = jsonNumber.wordE[0].y;
-						this.imgTwo.x = jsonNumber.wordE[1].x;
-						this.imgTwo.y = jsonNumber.wordE[1].y;
-						this.imgThree.x = jsonNumber.wordE[2].x;
-						this.imgThree.y = jsonNumber.wordE[2].y;
-						this.imgFour.x = jsonNumber.wordE[3].x;;
-						this.imgFour.y = jsonNumber.wordE[3].y;
-						this.imgFive.x = jsonNumber.wordE[4].x;;
-						this.imgFive.y = jsonNumber.wordE[4].y;
-						this.imgSix.x = jsonNumber.wordE[5].x;;
-						this.imgSix.y = jsonNumber.wordE[5].y;
-						this.imgSeven.x = jsonNumber.wordE[6].x;;
-						this.imgSeven.y = jsonNumber.wordE[6].y;
-						this.imgEight.x = jsonNumber.wordE[7].x;;
-						this.imgEight.y = jsonNumber.wordE[7].y;
-						this.imgNine.x = jsonNumber.wordE[8].x;;
-						this.imgNine.y = jsonNumber.wordE[8].y;
-						this.totalNumbers = 9;
-					break;
-				default:
+			for(var i = 0 ; i < jsonNumber[word].length ; i++) {
+					this.arrImgNumbers[i]['x'] = jsonNumber[word][i]['x'];
+					this.arrImgNumbers[i]['y'] = jsonNumber[word][i]['y'];
+					this.arrImgNumbers[i].visible = true;
 			}
 	}
 };
