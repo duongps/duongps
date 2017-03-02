@@ -1,5 +1,7 @@
 WordTrack.TraceWord = function(game){
-		this.arrTextForDraw = ['P', 'I', 'N', 'E', 'A', 'P', 'P', 'L', 'E'];
+		this.wordDraw = 'PINEAPPLE';
+		this.wordDrawing;
+		this.arrTextForDraw = [];
 		//this.arrTextForDraw = ['P'];
 		this.btnDone;
 		this.btnTryAgain;
@@ -38,12 +40,16 @@ WordTrack.TraceWord = function(game){
 
 WordTrack.TraceWord.prototype = {
 	create: function(){
+			this.arrTextForDraw = Array.from(this.wordDraw);
 			//add text
 			var textWordTrace = this.add.text(this.world.centerX,10,'Word	Tracer', {font: "24px Arial", fill: '#FFFFFF'});
 			textWordTrace.anchor.setTo(0.5, 0);
 
 			var textLearnWord = this.add.text(this.world.centerX,50,'No.1	word', {font: "32px Arial", fill: '#FFFFFF'});
 			textLearnWord.anchor.setTo(0.5, 0);
+
+			this.wordDrawing = this.add.text(640,130, this.wordDraw, {font: "24px Arial", fill: '#FFFFFF'});
+			this.wordDrawing.anchor.setTo(0.5, 0);
 
 			this.btnDone = this.add.button(570, 440, 'done', this.actionOnClickDone, this);
 			this.btnDone.events.onInputOver.add(this.onOverButton, this);
@@ -292,6 +298,10 @@ WordTrack.TraceWord.prototype = {
 			this.imgAlphaBet.loadTexture(word);
 			this.imgAlphaBet.visible = true;
 			this.iconPineapple.visible = true;
+			
+			//add color for word drawing
+			this.wordDrawing.addColor('#00CC00', this.wordDraw.indexOf(word));
+			this.wordDrawing.addColor('#FFFFFF', this.wordDraw.indexOf(word) + 1);
 
 			console.log('jsonNumber[word].length = ' + jsonNumber[word].length);
 			this.totalNumbers = jsonNumber[word].length;
