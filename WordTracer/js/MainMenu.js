@@ -9,6 +9,10 @@ WordTrack.MainMenu = function(game){
 		this.tick1;
 		this.tick2;
 		this.tick3;
+		//check choose image or not
+		this.isTick = false;
+
+		this.btnStart;
 };
 
 WordTrack.MainMenu.prototype = {
@@ -54,15 +58,18 @@ WordTrack.MainMenu.prototype = {
 			this.imgNo3.events.onInputDown.add(this.clickImg, this);
 
       //add button start
-      var btn = this.add.button(this.world.centerX, 460, 'btnStart', this.startGame, this, 1, 0, 2);
-      btn.anchor.set(0.5);
+      this.btnStart = this.add.button(this.world.centerX, 460, 'btnStart', this.startGame, this, 1, 0, 2);
+      this.btnStart.anchor.set(0.5);
+			this.btnStart.inputEnabled = false;
 	},
 
 	clickImg: function(obj) {
 			console.log('click image');
+			this.isTick = true;
 			this.tick1.visible = false;
 			this.tick2.visible = false;
 			this.tick3.visible = false;
+			this.btnStart.inputEnabled = true;
 
 			switch (obj) {
 				case this.imgNo1:
@@ -82,7 +89,9 @@ WordTrack.MainMenu.prototype = {
 	},
 
 	startGame: function() {
-		// start the Game state
-		this.state.start('Game');
+		if(this.isTick) {
+				// start the Game state
+				this.state.start('Game');
+		}
 	}
 };
