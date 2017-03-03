@@ -51,20 +51,14 @@ WordTrack.TraceWord.prototype = {
 			this.btnDone = this.add.button(this.world.centerX, this.world.height - 40,
 																		 		'done', this.actionOnClickDone, this);
 			this.btnDone.anchor.set(0.5);
-			this.btnDone.events.onInputOver.add(this.onOverButton, this);
-			this.btnDone.events.onInputOut.add(this.onOutButton, this);
 
 			this.btnTryAgain = this.add.button(this.world.centerX, this.world.height - 40,
 				 																		'tryagain', this.actionOnClickTryAgain, this);
 			this.btnTryAgain.anchor.set(0.5);
-			this.btnTryAgain.events.onInputOver.add(this.onOverButton, this);
-			this.btnTryAgain.events.onInputOut.add(this.onOutButton, this);
 			this.btnTryAgain.visible = false;
 
 			this.btnNextWord = this.add.button(this.world.centerX, this.world.height - 40, 'nextword', this.actionOnClickNextWord, this);
 			this.btnNextWord.anchor.set(0.5);
-			this.btnNextWord.events.onInputOver.add(this.onOverButton, this);
-			this.btnNextWord.events.onInputOut.add(this.onOutButton, this);
 			this.btnNextWord.visible = false;
 
 			this.txtWellDone = this.add.text(570, 150, 'Well Done', {font: "24px Arial", fill: '#FFFFFF'});
@@ -78,6 +72,8 @@ WordTrack.TraceWord.prototype = {
 
 			var background = this.game.add.image(this.world.centerX, this.world.centerY, 'background');
 			background.anchor.set(0.5);
+			background.events.onInputOver.add(this.onOverDrawBackground, this);
+			background.events.onInputOut.add(this.onOutDrawBackground, this);
 
 			this.iconPineapple = this.game.add.image(255, 75, 'iconPineapple');
 
@@ -216,11 +212,11 @@ WordTrack.TraceWord.prototype = {
 			}
 	},
 
-	onOverButton: function() {
+	onOverDrawBackground: function() {
 			this.input.deleteMoveCallback(this.paint, this);
 	},
 
-	onOutButton: function() {
+	onOutDrawBackground: function() {
 			if(this.isDrawing) {
 					this.input.addMoveCallback(this.paint, this);
 			}else {
