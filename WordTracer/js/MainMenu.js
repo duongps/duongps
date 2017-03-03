@@ -14,6 +14,9 @@ WordTrack.MainMenu = function(game){
 		this.isTick = false;
 
 		this.btnStart;
+
+		this.scaleDefault = 0.9;
+		this.spaceImageNo = 40;
 };
 
 WordTrack.MainMenu.prototype = {
@@ -26,11 +29,10 @@ WordTrack.MainMenu.prototype = {
 			textLearnWord.anchor.setTo(0.5, 0);
 
 			//add image
-			var spaceImageNo = 20;
-			var widthImageNo = 180;
-			var imageNo1X = (this.world.width - 3 * widthImageNo - 2 * spaceImageNo) / 2 + widthImageNo / 2;
-			var imageNo2X = imageNo1X + widthImageNo + spaceImageNo;
-			var imageNo3X = imageNo2X + widthImageNo + spaceImageNo;
+			var widthImageNo = 180 * this.scaleDefault;
+			var imageNo1X = (this.world.width - 3 * widthImageNo - 2 * this.spaceImageNo) / 2 + widthImageNo / 2;
+			var imageNo2X = imageNo1X + widthImageNo + this.spaceImageNo;
+			var imageNo3X = imageNo2X + widthImageNo + this.spaceImageNo;
 
 			this.imgNo1 = this.add.image(imageNo1X , 280, 'pineapple');
 			this.imgNo1.anchor.set(0.5);
@@ -41,6 +43,8 @@ WordTrack.MainMenu.prototype = {
 			this.imgNo3 = this.add.image(imageNo3X, 280, 'carrot');
 			this.imgNo3.anchor.set(0.5);
 			this.imgNo3.inputEnabled = true;
+
+			this.scaleAllImageNo(this.scaleDefault);
 
 			this.tick1 = this.add.image(imageNo1X , 280 + 30, 'tick');
 			this.tick1.anchor.set(0.5);
@@ -59,13 +63,19 @@ WordTrack.MainMenu.prototype = {
 			this.imgNo3.events.onInputDown.add(this.clickImg, this);
 
       //add button start
-      this.btnStart = this.add.button(this.world.centerX, 460, 'btnStart', this.startGame, this, 1, 0, 2);
+      this.btnStart = this.add.button(this.world.centerX, 455, 'btnStart', this.startGame, this, 1, 0, 2);
       this.btnStart.anchor.set(0.5);
 			this.btnStart.inputEnabled = false;
 	},
 
+	scaleAllImageNo: function(scale) {
+			this.imgNo1.scale.set(scale);
+			this.imgNo2.scale.set(scale);
+			this.imgNo3.scale.set(scale);
+	},
+
 	clickImg: function(obj) {
-			console.log('click image');
+			// console.log('click image');
 			this.isTick = true;
 			this.tick1.visible = false;
 			this.tick2.visible = false;
@@ -75,7 +85,7 @@ WordTrack.MainMenu.prototype = {
 			switch (obj) {
 				case this.imgNo1:
 					this.tick1.visible = true;
-					this.wordDraw = 'P';
+					this.wordDraw = 'PINEAPPLE';
 					this.imageName = 'pineapple';
 					break;
 				case this.imgNo2:
@@ -90,6 +100,8 @@ WordTrack.MainMenu.prototype = {
 					break;
 				default:
 			}
+			this.scaleAllImageNo(this.scaleDefault);
+			obj.scale.set(1);
 	},
 
 	startGame: function() {
