@@ -77,40 +77,53 @@ WordTrack.Preloader.prototype = {
 
 		this.load.spritesheet('btnStart','img/button.png', 120, 40);
 
-		this.load.image('pineapple', 'img/pineapple.png');
-		this.load.image('carrot', 'img/carrot.png');
-
 		this.load.image('btnReady', 'img/readytogo.png');
 		this.load.image('no1', 'img/no1.png');
 		this.load.image('no2', 'img/no2.png');
 		this.load.image('no3', 'img/no3.png');
 		this.load.image('tick', 'img/tick.png');
 
-		this.load.image('P', 'img/P.png');
-		this.load.image('I', 'img/I.png');
-		this.load.image('N', 'img/N.png');
-		this.load.image('A', 'img/A.png');
-		this.load.image('E', 'img/E.png');
-		this.load.image('L', 'img/L.png');
-		this.load.image('C', 'img/C.png');
-		this.load.image('R', 'img/R.png');
-		this.load.image('O', 'img/O.png');
-		this.load.image('T', 'img/T.png');
-
 		this.load.image('iconPineapple', 'img/iconpineapple.png');
+
+		//add image background
 		this.load.image('background', 'img/background.png');
+		this.load.image('card', 'img/background/card.png');
+
+		//add image word
+		this.load.image('badminton', 'img/word/badminton.png');
+		this.load.image('baseball', 'img/word/baseball.png');
+		this.load.image('basketball', 'img/word/basketball.png');
+		this.load.image('cycling', 'img/word/cycling.png');
+		this.load.image('football', 'img/word/football.png');
+		this.load.image('golf', 'img/word/golf.png');
+		this.load.image('hockey', 'img/word/hockey.png');
+		this.load.image('rugby', 'img/word/rugby.png');
+		this.load.image('tennis', 'img/word/tennis.png');
+
+		//add image word
+		this.load.image('P', 'img/alphabet/P.png');
+		this.load.image('I', 'img/alphabet/I.png');
+		this.load.image('N', 'img/alphabet/N.png');
+		this.load.image('A', 'img/alphabet/A.png');
+		this.load.image('E', 'img/alphabet/E.png');
+		this.load.image('L', 'img/alphabet/L.png');
+		this.load.image('C', 'img/alphabet/C.png');
+		this.load.image('R', 'img/alphabet/R.png');
+		this.load.image('O', 'img/alphabet/O.png');
+		this.load.image('T', 'img/alphabet/T.png');
 
 		//add image number
-		this.load.image('img0', 'img/0.png');
-		this.load.image('img1', 'img/1.png');
-		this.load.image('img2', 'img/2.png');
-		this.load.image('img3', 'img/3.png');
-		this.load.image('img4', 'img/4.png');
-		this.load.image('img5', 'img/5.png');
-		this.load.image('img6', 'img/6.png');
-		this.load.image('img7', 'img/7.png');
-		this.load.image('img8', 'img/8.png');
-		this.load.image('img9', 'img/9.png');
+		this.load.image('img0', 'img/number/0.png');
+		this.load.image('img1', 'img/number/1.png');
+		this.load.image('img2', 'img/number/2.png');
+		this.load.image('img3', 'img/number/3.png');
+		this.load.image('img4', 'img/number/4.png');
+		this.load.image('img5', 'img/number/5.png');
+		this.load.image('img6', 'img/number/6.png');
+		this.load.image('img7', 'img/number/7.png');
+		this.load.image('img8', 'img/number/8.png');
+		this.load.image('img9', 'img/number/9.png');
+
 		this.load.image('done' , 'img/done.png');
 		this.load.image('nextword' , 'img/nextword.png');
 		this.load.image('tryagain' , 'img/tryagain.png');

@@ -6,10 +6,10 @@ WordTrack.Game.prototype = {
 			var imageName = this.state.states['MainMenu'].imageName;
 
 			//add text
-			var textWordTrace = this.add.text(this.world.centerX, 10, 'Word	Tracer', {font: "24px Arial", fill: '#FFFFFF'});
+			var textWordTrace = this.add.text(this.world.centerX, 10, 'Word	Tracer', {font: "24px Verdana", fill: '#FFFFFF'});
 			textWordTrace.anchor.setTo(0.5, 0);
 
-			var textLearnWord = this.add.text(this.world.centerX, 50, wordDraw, {font: "32px Arial", fill: '#FFFFFF'});
+			var textLearnWord = this.add.text(this.world.centerX, 50, wordDraw, {font: "32px Verdana", fill: '#FFFFFF'});
 			textLearnWord.anchor.setTo(0.5, 0);
 
 			var img = this.game.add.image(this.world.centerX, this.world.centerY, imageName);

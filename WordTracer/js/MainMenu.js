@@ -17,15 +17,17 @@ WordTrack.MainMenu = function(game){
 
 		this.scaleDefault = 0.9;
 		this.spaceImageNo = 40;
+		this.spaceWordCardHeight = 20;
+		this.spaceTextCardHeight = 90;
 };
 
 WordTrack.MainMenu.prototype = {
 	create: function(){
       //add text
-      var textWordTrace = this.add.text(this.world.centerX,10,'Word Tracer', {font: "72px Arial", fill: '#FFFFFF'});
+      var textWordTrace = this.add.text(this.world.centerX,10,'Word Tracer', {font: "72px Verdana", fill: '#FFFFFF'});
 			textWordTrace.anchor.setTo(0.5, 0);
 
-      var textLearnWord = this.add.text(this.world.centerX,100,'Learn 3 words', {font: "24px Arial", fill: '#FFFFFF'});
+      var textLearnWord = this.add.text(this.world.centerX,100,'Learn 3 words', {font: "24px Verdana", fill: '#FFFFFF'});
 			textLearnWord.anchor.setTo(0.5, 0);
 
 			//add image
@@ -34,15 +36,32 @@ WordTrack.MainMenu.prototype = {
 			var imageNo2X = imageNo1X + widthImageNo + this.spaceImageNo;
 			var imageNo3X = imageNo2X + widthImageNo + this.spaceImageNo;
 
-			this.imgNo1 = this.add.image(imageNo1X , 280, 'pineapple');
+			//add card 1
+			this.imgNo1 = this.add.image(imageNo1X , 280, 'card');
 			this.imgNo1.anchor.set(0.5);
 			this.imgNo1.inputEnabled = true;
-			this.imgNo2 = this.add.image(imageNo2X, 280, 'carrot');
+			var imgWord1 = this.add.image(this.imgNo1.x, this.imgNo1.y - this.spaceWordCardHeight, 'football');
+			imgWord1.anchor.set(0.5);
+			var imgWordText1 = this.add.text(this.imgNo1.x, this.imgNo1.y + this.spaceTextCardHeight,'FOOTBALL', {font: "21px Verdana", fill: '#000000'});
+			imgWordText1.anchor.set(0.5);
+
+			//add card 2
+			this.imgNo2 = this.add.image(imageNo2X, 280, 'card');
 			this.imgNo2.anchor.set(0.5);
 			this.imgNo2.inputEnabled = true;
-			this.imgNo3 = this.add.image(imageNo3X, 280, 'carrot');
+			var imgWord2 = this.add.image(this.imgNo2.x, this.imgNo2.y - this.spaceWordCardHeight, 'badminton');
+			imgWord2.anchor.set(0.5);
+			var imgWordText2 = this.add.text(this.imgNo2.x, this.imgNo2.y + this.spaceTextCardHeight,'BADMINTON', {font: "21px Verdana", fill: '#000000'});
+			imgWordText2.anchor.set(0.5);
+
+			//add card 3
+			this.imgNo3 = this.add.image(imageNo3X, 280, 'card');
 			this.imgNo3.anchor.set(0.5);
 			this.imgNo3.inputEnabled = true;
+			var imgWord3 = this.add.image(this.imgNo3.x, this.imgNo3.y - this.spaceWordCardHeight, 'baseball');
+			imgWord3.anchor.set(0.5);
+			var imgWordText3 = this.add.text(this.imgNo3.x, this.imgNo3.y + this.spaceTextCardHeight,'BASEBALL', {font: "21px Verdana", fill: '#000000'});
+			imgWordText3.anchor.set(0.5);
 
 			this.scaleAllImageNo(this.scaleDefault);
 
@@ -85,18 +104,18 @@ WordTrack.MainMenu.prototype = {
 			switch (obj) {
 				case this.imgNo1:
 					this.tick1.visible = true;
-					this.wordDraw = 'PINEAPPLE';
-					this.imageName = 'pineapple';
+					this.wordDraw = 'FOOTBALL';
+					this.imageName = 'football';
 					break;
 				case this.imgNo2:
 					this.tick2.visible = true;
-					this.wordDraw = 'CARROT';
-					this.imageName = 'carrot';
+					this.wordDraw = 'BADMINTON';
+					this.imageName = 'badminton';
 					break;
 				case this.imgNo3:
 					this.tick3.visible = true;
-					this.wordDraw = 'CARROT';
-					this.imageName = 'carrot';
+					this.wordDraw = 'BASEBALL';
+					this.imageName = 'baseball';
 					break;
 				default:
 			}

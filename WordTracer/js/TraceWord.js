@@ -2,7 +2,6 @@ WordTrack.TraceWord = function(game){
 		this.wordDraw;
 		this.wordDrawing;
 		this.arrTextForDraw = [];
-		//this.arrTextForDraw = ['P'];
 		this.btnDone;
 		this.btnTryAgain;
 		this.btnNextWord
@@ -12,6 +11,7 @@ WordTrack.TraceWord = function(game){
 
 		this.imgAlphaBet;
 		this.iconPineapple;
+		this.background;
 
 		this.imgOne;
 		this.imgTwo;
@@ -42,10 +42,10 @@ WordTrack.TraceWord.prototype = {
 			this.wordDraw = this.state.states['MainMenu'].wordDraw;
 			this.arrTextForDraw = Array.from(this.wordDraw);
 			//add text
-			var textWordTrace = this.add.text(this.world.centerX,10,'Word	Tracer', {font: "18px Arial", fill: '#FFFFFF'});
+			var textWordTrace = this.add.text(this.world.centerX,10,'Word	Tracer', {font: "18px Verdana", fill: '#FFFFFF'});
 			textWordTrace.anchor.setTo(0.5, 0);
 
-			this.wordDrawing = this.add.text(this.world.centerX,40, this.wordDraw, {font: "21px Arial", fill: '#FFFFFF'});
+			this.wordDrawing = this.add.text(this.world.centerX,40, this.wordDraw, {font: "21px Verdana", fill: '#FFFFFF'});
 			this.wordDrawing.anchor.setTo(0.5, 0);
 
 			this.btnDone = this.add.button(this.world.centerX, this.world.height - 40,
@@ -61,19 +61,17 @@ WordTrack.TraceWord.prototype = {
 			this.btnNextWord.anchor.set(0.5);
 			this.btnNextWord.visible = false;
 
-			this.txtWellDone = this.add.text(570, 150, 'Well Done', {font: "24px Arial", fill: '#FFFFFF'});
+			this.txtWellDone = this.add.text(570, 150, 'Well Done', {font: "24px Verdana", fill: '#FFFFFF'});
 			this.txtWellDone.visible = false;
 
-			this.txtBadDraw = this.add.text(570, 150, 'Bad Draw', {font: "24px Arial", fill: '#FFFFFF'});
+			this.txtBadDraw = this.add.text(570, 150, 'Bad Draw', {font: "24px Verdana", fill: '#FFFFFF'});
 			this.txtBadDraw.visible = false;
 
 			this.imgStarWellDone = this.add.sprite(640, this.world.centerY, 'welldone');
 			this.imgStarWellDone.anchor.set(0.5);
 
-			var background = this.game.add.image(this.world.centerX, this.world.centerY, 'background');
-			background.anchor.set(0.5);
-			background.events.onInputOver.add(this.onOverDrawBackground, this);
-			background.events.onInputOut.add(this.onOutDrawBackground, this);
+			this.background = this.game.add.image(this.world.centerX, this.world.centerY, 'background');
+			this.background.anchor.set(0.5);
 
 			this.iconPineapple = this.game.add.image(255, 75, 'iconPineapple');
 
@@ -212,22 +210,17 @@ WordTrack.TraceWord.prototype = {
 			}
 	},
 
-	onOverDrawBackground: function() {
-			this.input.deleteMoveCallback(this.paint, this);
-	},
-
-	onOutDrawBackground: function() {
-			if(this.isDrawing) {
-					this.input.addMoveCallback(this.paint, this);
-			}else {
-					this.input.deleteMoveCallback(this.paint, this);
-			}
-	},
-
 	paint: function(pointer, x, y) {
 			if (pointer.isDown)
 			{
-					this.bmd.circle(x, y, 10, '#00CC00');
+					//draw only in background
+					var minX = this.background.x - this.background.width/2;
+					var maxX = this.background.x + this.background.width/2;
+					var minY = this.background.y - this.background.height/2;
+					var maxY = this.background.y + this.background.height/2;
+					if((minX < x && x < maxX) && (minY < y && y < maxY)) {
+								this.bmd.circle(x, y, 10, '#00CC00');
+					}
 			}
 	},
 
@@ -249,16 +242,6 @@ WordTrack.TraceWord.prototype = {
 			this.imgAlphaBet.loadTexture(word);
 			this.imgAlphaBet.visible = true;
 			this.iconPineapple.visible = true;
-
-			//add color for word drawing
-			this.wordDrawing.addColor('#00CC00', 0);
-			// this.countDraw = this.countDraw + 1;
-			// console.log('this.countDraw : ' + this.countDraw);
-			// this.wordDrawing.addColor('#FFFFFF',this.countDraw);
-			// console.log('this.arrTextForDraw.length' + this.arrTextForDraw.length);
-			// if(this.arrTextForDraw.length > 0) {
-			// 		this.wordDrawing.addColor('#FFFFFF', this.wordDraw.length - this.arrTextForDraw.length);
-			// }
 
 			console.log('jsonNumber[word].length = ' + jsonNumber[word].length);
 			this.totalNumbers = jsonNumber[word].length;
