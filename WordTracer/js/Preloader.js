@@ -68,6 +68,18 @@ WordTrack.Preloader = function(game){
 																{"name": "imgFive", "x": 295, "y":  202},\
 																{"name": "imgSix", "x": 295, "y":  302}]\
 															}';
+
+				this.jsonObjWord = '{"word":[\
+																	    {"text":"BADMINTON", "image": "badminton.png"},\
+																	    {"text":"BASEBALL", "image": "baseball.png"},\
+																			{"text":"BASKETBALL", "image": "basketball.png"},\
+																			{"text":"CYCLING", "image": "cycling.png"},\
+																			{"text":"FOOTBALL", "image": "football.png"},\
+																			{"text":"GOLF", "image": "golf.png"},\
+																			{"text":"HOCKEY", "image": "hockey.png"},\
+																			{"text":"RUGBY", "image": "rugby.png"},\
+																			{"text":"TENNIS", "image": "tennis.png"}\
+																	 ]}';
 };
 
 WordTrack.Preloader.prototype = {
@@ -78,39 +90,48 @@ WordTrack.Preloader.prototype = {
 		this.load.spritesheet('btnStart','img/button.png', 120, 40);
 
 		this.load.image('btnReady', 'img/readytogo.png');
-		this.load.image('no1', 'img/no1.png');
-		this.load.image('no2', 'img/no2.png');
-		this.load.image('no3', 'img/no3.png');
 		this.load.image('tick', 'img/tick.png');
 
 		this.load.image('iconPineapple', 'img/iconpineapple.png');
 
 		//add image background
-		this.load.image('background', 'img/background.png');
+		this.load.image('background', 'img/background/background.png');
 		this.load.image('card', 'img/background/card.png');
 
+		var jsonObjWord = this.jsonObjWord;
+		jsonWord = JSON.parse(jsonObjWord);
 		//add image word
-		this.load.image('badminton', 'img/word/badminton.png');
-		this.load.image('baseball', 'img/word/baseball.png');
-		this.load.image('basketball', 'img/word/basketball.png');
-		this.load.image('cycling', 'img/word/cycling.png');
-		this.load.image('football', 'img/word/football.png');
-		this.load.image('golf', 'img/word/golf.png');
-		this.load.image('hockey', 'img/word/hockey.png');
-		this.load.image('rugby', 'img/word/rugby.png');
-		this.load.image('tennis', 'img/word/tennis.png');
+		for(var i = 0 ; i < jsonWord.word.length ; i++) {
+				this.load.image(jsonWord.word[i].text, 'img/word/' + jsonWord.word[i].image);
+		}
 
 		//add image word
-		this.load.image('P', 'img/alphabet/P.png');
-		this.load.image('I', 'img/alphabet/I.png');
-		this.load.image('N', 'img/alphabet/N.png');
 		this.load.image('A', 'img/alphabet/A.png');
-		this.load.image('E', 'img/alphabet/E.png');
-		this.load.image('L', 'img/alphabet/L.png');
+		this.load.image('B', 'img/alphabet/B.png');
 		this.load.image('C', 'img/alphabet/C.png');
-		this.load.image('R', 'img/alphabet/R.png');
+		this.load.image('D', 'img/alphabet/D.png');
+		this.load.image('E', 'img/alphabet/E.png');
+		this.load.image('F', 'img/alphabet/F.png');
+		this.load.image('G', 'img/alphabet/G.png');
+		this.load.image('H', 'img/alphabet/H.png');
+		this.load.image('I', 'img/alphabet/I.png');
+		this.load.image('J', 'img/alphabet/J.png');
+		this.load.image('K', 'img/alphabet/K.png');
+		this.load.image('L', 'img/alphabet/L.png');
+		this.load.image('M', 'img/alphabet/M.png');
+		this.load.image('N', 'img/alphabet/N.png');
 		this.load.image('O', 'img/alphabet/O.png');
+		this.load.image('P', 'img/alphabet/P.png');
+		this.load.image('Q', 'img/alphabet/Q.png');
+		this.load.image('R', 'img/alphabet/R.png');
+		this.load.image('S', 'img/alphabet/S.png');
 		this.load.image('T', 'img/alphabet/T.png');
+		this.load.image('U', 'img/alphabet/U.png');
+		this.load.image('V', 'img/alphabet/V.png');
+		this.load.image('W', 'img/alphabet/W.png');
+		this.load.image('X', 'img/alphabet/X.png');
+		this.load.image('Y', 'img/alphabet/Y.png');
+		this.load.image('Z', 'img/alphabet/Z.png');
 
 		//add image number
 		this.load.image('img0', 'img/number/0.png');
