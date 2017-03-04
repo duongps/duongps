@@ -42,10 +42,10 @@ WordTrack.TraceWord.prototype = {
 			this.wordDraw = this.state.states['MainMenu'].wordDraw;
 			this.arrTextForDraw = Array.from(this.wordDraw);
 			//add text
-			var textWordTrace = this.add.text(this.world.centerX,10,'Word	Tracer', {font: "18px Verdana", fill: '#FFFFFF'});
+			var textWordTrace = this.add.text(this.world.centerX, 5, 'Word	Tracer', {font: "20px Verdana", fill: '#FFFFFF'});
 			textWordTrace.anchor.setTo(0.5, 0);
 
-			this.wordDrawing = this.add.text(this.world.centerX,40, this.wordDraw, {font: "21px Verdana", fill: '#FFFFFF'});
+			this.wordDrawing = this.add.text(this.world.centerX, 40, this.wordDraw, {font: "23px Verdana", fill: '#FFFFFF'});
 			this.wordDrawing.anchor.setTo(0.5, 0);
 
 			this.btnDone = this.add.button(this.world.centerX, this.world.height - 40,
