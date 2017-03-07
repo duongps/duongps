@@ -28,7 +28,7 @@ WordTrack.Game.prototype = {
 			imgWordText.anchor.set(0.5);
 			imgWordText.scale.set(this.scaleRatio);
 
-			var btn = this.add.button(this.world.centerX, 450, 'btnReady', this.readyGame, this);
+			var btn = this.add.button(this.world.centerX, 460, 'btnReady', this.readyGame, this, 1, 0, 2);
 			btn.anchor.set(0.5);
 	},
 

@@ -10,7 +10,7 @@ WordTrack.TraceWord = function(game){
 		this.imgStarWellDone;
 
 		this.imgAlphaBet;
-		this.iconPineapple;
+		this.iconImg;
 		this.background;
 
 		this.imgOne;
@@ -48,16 +48,20 @@ WordTrack.TraceWord.prototype = {
 			this.wordDrawing = this.add.text(this.world.centerX, 40, this.wordDraw, {font: "23px Verdana", fill: '#FFFFFF'});
 			this.wordDrawing.anchor.setTo(0.5, 0);
 
+			//add line trainning
+			var line = this.add.image(this.world.centerX , 36, 'lineTranning');
+			line.anchor.set(0.5);
+
 			this.btnDone = this.add.button(this.world.centerX, this.world.height - 40,
-																		 		'done', this.actionOnClickDone, this);
+																		 		'btnDone', this.actionOnClickDone, this);
 			this.btnDone.anchor.set(0.5);
 
 			this.btnTryAgain = this.add.button(this.world.centerX, this.world.height - 40,
-				 																		'tryagain', this.actionOnClickTryAgain, this);
+				 																		'btnTryAgain', this.actionOnClickTryAgain, this);
 			this.btnTryAgain.anchor.set(0.5);
 			this.btnTryAgain.visible = false;
 
-			this.btnNextWord = this.add.button(this.world.centerX, this.world.height - 40, 'nextword', this.actionOnClickNextWord, this);
+			this.btnNextWord = this.add.button(this.world.centerX, this.world.height - 40, 'btnNextWord', this.actionOnClickNextWord, this);
 			this.btnNextWord.anchor.set(0.5);
 			this.btnNextWord.visible = false;
 
@@ -70,10 +74,12 @@ WordTrack.TraceWord.prototype = {
 			this.imgStarWellDone = this.add.sprite(640, this.world.centerY, 'welldone');
 			this.imgStarWellDone.anchor.set(0.5);
 
-			this.background = this.game.add.image(this.world.centerX, this.world.centerY, 'background');
+			this.background = this.game.add.image(this.world.centerX, this.world.centerY, 'card');
 			this.background.anchor.set(0.5);
+			this.background.scale.set(1.2);
 
-			this.iconPineapple = this.game.add.image(255, 75, 'iconPineapple');
+			this.iconImg = this.game.add.image(265, 80, this.state.states['MainMenu'].wordDraw);
+			this.iconImg.scale.set(0.5);
 
 			this.imgAlphaBet = this.game.add.image(this.world.centerX, 65, 'P');
 			this.imgAlphaBet.anchor.setTo(0.5, 0);
@@ -165,7 +171,7 @@ WordTrack.TraceWord.prototype = {
 					this.btnNextWord.visible = true;
 					this.setVisibleAllImages(false);
 					this.imgAlphaBet.visible = false;
-					this.iconPineapple.visible = false;
+					this.iconImg.visible = false;
 					this.add.tween(this.imgStarWellDone).to( { x: 640 }, 500, "Linear", true);
 					this.add.tween(this.imgStarWellDone.scale).to({x: 1.3, y: 1.3}, 700, "Linear", true, 0 , -1, true);
 
@@ -241,7 +247,7 @@ WordTrack.TraceWord.prototype = {
 			this.imgStarWellDone.x = 850;
 			this.imgAlphaBet.loadTexture(word);
 			this.imgAlphaBet.visible = true;
-			this.iconPineapple.visible = true;
+			this.iconImg.visible = true;
 
 			console.log('jsonNumber[word].length = ' + jsonNumber[word].length);
 			this.totalNumbers = jsonNumber[word].length;

@@ -39,6 +39,7 @@ WordTrack.MainMenu.prototype = {
 			while(this.n3 === this.n1 || this.n3 === this.n2) {
 					this.n3 = this.rnd.integerInRange(0, maxLength);
 			}
+
 			console.log('n1: '+ this.n1);
 			console.log('n2: '+ this.n2);
 			console.log('n3: '+ this.n3);
