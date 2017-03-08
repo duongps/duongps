@@ -17,11 +17,11 @@ WordTrack.Preloader = function(game){
 																{"name": "imgSeven", "x": 407, "y":  232},\
 																{"name": "imgEight", "x": 425, "y":  300},\
 																{"name": "imgNine", "x": 357, "y":  325}],\
-													"C":[{"name": "imgOne", "x": 450 , "y": 145},\
-																{"name": "imgTwo", "x": 350, "y":  155},\
-																{"name": "imgThree", "x": 305, "y": 250},\
-																{"name": "imgFour", "x": 350, "y":  350},\
-																{"name": "imgFive", "x": 450, "y":  360}],\
+													"C":[{"name": "imgOne", "x": 449 , "y": 142},\
+																{"name": "imgTwo", "x": 344, "y":  156},\
+																{"name": "imgThree", "x": 309, "y": 241},\
+																{"name": "imgFour", "x": 344, "y":  316},\
+																{"name": "imgFive", "x": 449, "y":  328}],\
 													"D":[{"name": "imgOne", "x": 308 , "y": 133},\
 																{"name": "imgTwo", "x": 308, "y":  230},\
 																{"name": "imgThree", "x": 308, "y": 323},\
@@ -200,11 +200,11 @@ WordTrack.Preloader.prototype = {
 		// set background color and preload image
 		this.stage.backgroundColor = '#2FC8DD';
 
-		this.load.spritesheet('btnStart','img/btndone.png', 220, 50);
-		this.load.spritesheet('btnReady', 'img/btnreadytogo.png', 220, 50);
-		this.load.spritesheet('btnDone' , 'img/btndone.png', 220, 50);
-		this.load.spritesheet('btnTryAgain' , 'img/btntryagain.png', 220, 50);
-		this.load.spritesheet('btnNextWord' , 'img/btnnextword.png', 220, 50);
+		this.load.spritesheet('btnStart','img/button/btnstart.png', 220, 50);
+		this.load.spritesheet('btnReady', 'img/button/btnreadytogo.png', 220, 50);
+		this.load.spritesheet('btnDone' , 'img/button/btndone.png', 220, 50);
+		this.load.spritesheet('btnTryAgain' , 'img/button/btntryagain.png', 220, 50);
+		this.load.spritesheet('btnNextWord' , 'img/button/btnnextword.png', 220, 50);
 
 		this.load.image('welldone' , 'img/welldone.png');
 		this.load.image('tick', 'img/tick.png');
@@ -223,7 +223,10 @@ WordTrack.Preloader.prototype = {
 		//add image word
 		this.load.image('A', 'img/alphabet/A.png');
 		this.load.image('B', 'img/alphabet/B.png');
+
 		this.load.image('C', 'img/alphabet/C.png');
+		this.load.image('dashlineC', 'img/alphabet/dashlineC.png');
+
 		this.load.image('D', 'img/alphabet/D.png');
 		this.load.image('E', 'img/alphabet/E.png');
 		this.load.image('F', 'img/alphabet/F.png');
@@ -249,16 +252,19 @@ WordTrack.Preloader.prototype = {
 		this.load.image('Z', 'img/alphabet/Z.png');
 
 		//add image number
-		this.load.image('img0', 'img/number/0.png');
-		this.load.image('img1', 'img/number/1.png');
-		this.load.image('img2', 'img/number/2.png');
-		this.load.image('img3', 'img/number/3.png');
-		this.load.image('img4', 'img/number/4.png');
-		this.load.image('img5', 'img/number/5.png');
-		this.load.image('img6', 'img/number/6.png');
-		this.load.image('img7', 'img/number/7.png');
-		this.load.image('img8', 'img/number/8.png');
-		this.load.image('img9', 'img/number/9.png');
+		this.load.image('0', 'img/number/0.png');
+		this.load.image('1', 'img/number/1.png');
+		this.load.image('2', 'img/number/2.png');
+		this.load.image('3', 'img/number/3.png');
+		this.load.image('4', 'img/number/4.png');
+		this.load.image('5', 'img/number/5.png');
+		this.load.image('6', 'img/number/6.png');
+		this.load.image('7', 'img/number/7.png');
+		this.load.image('8', 'img/number/8.png');
+		this.load.image('9', 'img/number/9.png');
+
+		this.load.image('star', 'img/star.png');
+		this.load.image('arrow', 'img/arrow.png');
 
 		//load json data
 		//this.load.text('dataNumbers', '/my/numbers.json');

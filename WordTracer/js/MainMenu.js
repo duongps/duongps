@@ -30,7 +30,9 @@ WordTrack.MainMenu.prototype = {
 			var jsonObjWord = this.state.states['Preloader'].jsonObjWord;
 			this.jsonWord = JSON.parse(jsonObjWord);
 			var maxLength = this.jsonWord.word.length - 1;
-			this.n1 = this.rnd.integerInRange(0, maxLength);
+			//this.n1 = this.rnd.integerInRange(0, maxLength);
+			//hard code to test
+			this.n1 = 3;
 			this.n2 = this.rnd.integerInRange(0, maxLength);
 			this.n3 = this.rnd.integerInRange(0, maxLength);
 			while(this.n2 === this.n1) {

@@ -53,11 +53,12 @@ WordTrack.TraceWord.prototype = {
 			line.anchor.set(0.5);
 
 			this.btnDone = this.add.button(this.world.centerX, this.world.height - 40,
-																		 		'btnDone', this.actionOnClickDone, this);
+																		 		'btnDone', this.actionOnClickDone, this, 1, 0, 2);
 			this.btnDone.anchor.set(0.5);
 
+
 			this.btnTryAgain = this.add.button(this.world.centerX, this.world.height - 40,
-				 																		'btnTryAgain', this.actionOnClickTryAgain, this);
+				 																		'btnTryAgain', this.actionOnClickTryAgain, this, 1, 0, 2);
 			this.btnTryAgain.anchor.set(0.5);
 			this.btnTryAgain.visible = false;
 
@@ -81,86 +82,40 @@ WordTrack.TraceWord.prototype = {
 			this.iconImg = this.game.add.image(265, 80, this.state.states['MainMenu'].wordDraw);
 			this.iconImg.scale.set(0.5);
 
-			this.imgAlphaBet = this.game.add.image(this.world.centerX, 65, 'P');
-			this.imgAlphaBet.anchor.setTo(0.5, 0);
+			this.imgAlphaBet = this.game.add.image(this.world.centerX, this.world.centerY, 'P');
+			this.imgAlphaBet.anchor.setTo(0.5, 0.5);
+			var dashline = this.game.add.image(this.world.centerX - 5, this.world.centerY - 13.75, 'dashlineC');
+			dashline.anchor.setTo(0.5, 0.5);
+			var arrow = this.game.add.image(460, 145, 'arrow');
+			arrow.anchor.setTo(0, 0.5);
+			arrow.angle = 190;
+			var star = this.game.add.image(449, 328, 'star');
+			star.anchor.setTo(0.5, 0.5);
+			this.add.tween(star).to( { alpha: 0.2 }, 400, "Linear", true ,0 , -1 , true);
 
-			this.imgOne = this.add.sprite(0, 0, 'img1');
-			this.imgOne.anchor.set(0.5);
-			this.imgTwo = this.add.sprite(0, 0, 'img2');
-			this.imgTwo.anchor.set(0.5);
-			this.imgThree = this.add.sprite(0, 0, 'img3');
-			this.imgThree.anchor.set(0.5);
-			this.imgFour = this.add.sprite(0, 0, 'img4');
-			this.imgFour.anchor.set(0.5);
-			this.imgFive = this.add.sprite(0, 0, 'img5');
-			this.imgFive.anchor.set(0.5);
-			this.imgSix = this.add.sprite(0, 0, 'img6');
-			this.imgSix.anchor.set(0.5);
-			this.imgSeven = this.add.sprite(0, 0, 'img7');
-			this.imgSeven.anchor.set(0.5);
-			this.imgEight = this.add.sprite(0, 0, 'img8');
-			this.imgEight.anchor.set(0.5);
-			this.imgNine = this.add.sprite(0, 0, 'img9');
-			this.imgNine.anchor.set(0.5);
-			this.setVisibleAllImages(false);
-
-			//store numbers 1->9 to array
-			this.arrImgNumbers.push(this.imgOne, this.imgTwo, this.imgThree, this.imgFour,
-				 													this.imgFive, this.imgSix, this.imgSeven, this.imgEight, this.imgNine);
+			//add all image number from 1 to 9 and set visible to false
+			this.addImageNumbers();
 
 			//init word p first
 			this.initWord(this.arrTextForDraw.shift());
-
-			//enable input all number
-			this.addEventAllNumbers();
 
 			this.bmd = this.add.bitmapData(800, 600);
 			this.drawImage = this.add.sprite(0, 0, this.bmd);
 		  this.input.addMoveCallback(this.paint, this);
 	},
 
-	addEventAllNumbers: function() {
-			this.imgOne.inputEnabled = true;
-			this.imgTwo.inputEnabled = true;
-			this.imgThree.inputEnabled = true;
-			this.imgFour.inputEnabled = true;
-			this.imgFive.inputEnabled = true;
-			this.imgSix.inputEnabled = true;
-			this.imgSeven.inputEnabled = true;
-			this.imgEight.inputEnabled = true;
-			this.imgNine.inputEnabled = true;
+	addImageNumbers: function() {
+			//store numbers 1->9 to array
+			this.arrImgNumbers.push(this.imgOne, this.imgTwo, this.imgThree, this.imgFour,
+				 													this.imgFive, this.imgSix, this.imgSeven, this.imgEight, this.imgNine);
 
-			this.imgOne.events.onInputDown.add(this.overNumber, this);
-			this.imgTwo.events.onInputDown.add(this.overNumber, this);
-			this.imgThree.events.onInputDown.add(this.overNumber, this);
-			this.imgFour.events.onInputDown.add(this.overNumber, this);
-			this.imgFive.events.onInputDown.add(this.overNumber, this);
-			this.imgSix.events.onInputDown.add(this.overNumber, this);
-			this.imgSeven.events.onInputDown.add(this.overNumber, this);
-			this.imgEight.events.onInputDown.add(this.overNumber, this);
-			this.imgNine.events.onInputDown.add(this.overNumber, this);
-
-			this.imgOne.events.onInputOver.add(this.overNumber, this);
-			this.imgTwo.events.onInputOver.add(this.overNumber, this);
-			this.imgThree.events.onInputOver.add(this.overNumber, this);
-			this.imgFour.events.onInputOver.add(this.overNumber, this);
-			this.imgFive.events.onInputOver.add(this.overNumber, this);
-			this.imgSix.events.onInputOver.add(this.overNumber, this);
-			this.imgSeven.events.onInputOver.add(this.overNumber, this);
-			this.imgEight.events.onInputOver.add(this.overNumber, this);
-			this.imgNine.events.onInputOver.add(this.overNumber, this);
-	},
-
-	setVisibleAllImages: function(flag) {
-			this.imgOne.visible = flag;
-			this.imgTwo.visible = flag;
-			this.imgThree.visible = flag;
-			this.imgFour.visible = flag;
-			this.imgFive.visible = flag;
-			this.imgSix.visible = flag;
-			this.imgSeven.visible = flag;
-			this.imgEight.visible = flag;
-			this.imgNine.visible = flag;
+			for(var i = 0 ; i < this.arrImgNumbers.length ; i++) {
+					this.arrImgNumbers[i] = this.add.sprite(0, 0, i + 1);
+					this.arrImgNumbers[i].anchor.set(0.5);
+					this.arrImgNumbers[i].inputEnabled = true;
+					this.arrImgNumbers[i].events.onInputDown.add(this.overNumber, this);
+					this.arrImgNumbers[i].events.onInputOver.add(this.overNumber, this);
+			}
 	},
 
 	actionOnClickDone: function() {
@@ -169,7 +124,6 @@ WordTrack.TraceWord.prototype = {
 					this.btnDone.visible = false;
 					this.txtWellDone.visible = true;
 					this.btnNextWord.visible = true;
-					this.setVisibleAllImages(false);
 					this.imgAlphaBet.visible = false;
 					this.iconImg.visible = false;
 					this.add.tween(this.imgStarWellDone).to( { x: 640 }, 500, "Linear", true);
@@ -253,9 +207,10 @@ WordTrack.TraceWord.prototype = {
 			this.totalNumbers = jsonNumber[word].length;
 
 			for(var i = 0 ; i < jsonNumber[word].length ; i++) {
+					console.log('test :' + i);
 					this.arrImgNumbers[i]['x'] = jsonNumber[word][i]['x'];
 					this.arrImgNumbers[i]['y'] = jsonNumber[word][i]['y'];
-					this.arrImgNumbers[i].visible = true;
+					//this.arrImgNumbers[i].visible = true;
 			}
 	}
 };
