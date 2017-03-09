@@ -13,17 +13,9 @@ WordTrack.TraceWord = function(game){
 		this.iconImg;
 		this.background;
 
-		this.imgOne;
-		this.imgTwo;
-		this.imgThree;
-		// this.imgFour;
-		// this.imgFive;
-		// this.imgSix;
-		// this.imgSeven;
-		// this.imgEight;
-		// this.imgNine;
+		this.groupDraw;
 
-		this.arrImgNumbers = [];
+		//this.arrImgNumbers = [];
 
 		this.arrResult = [];
 		this.totalNumbers;
@@ -89,29 +81,12 @@ WordTrack.TraceWord.prototype = {
 			this.iconImg = this.game.add.image(265, 80, this.state.states['MainMenu'].wordDraw);
 			this.iconImg.scale.set(0.5);
 
-			//add all image number from 1 to 9 and set visible to false
-			this.addImageNumbers();
-
 			//init word p first
 			this.initWord(this.arrTextForDraw.shift());
 
 			this.bmd = this.add.bitmapData(800, 600);
 			this.drawImage = this.add.sprite(0, 0, this.bmd);
 		  this.input.addMoveCallback(this.paint, this);
-	},
-
-	addImageNumbers: function() {
-			//store numbers 1->9 to array
-			this.arrImgNumbers.push(this.imgOne, this.imgTwo, this.imgThree);
-
-			for(var i = 0 ; i < this.arrImgNumbers.length ; i++) {
-					this.arrImgNumbers[i] = this.add.sprite(0, 0, i + 1);
-					this.arrImgNumbers[i].anchor.set(0.5);
-					this.arrImgNumbers[i].inputEnabled = true;
-					this.arrImgNumbers[i].events.onInputDown.add(this.overNumber, this);
-					this.arrImgNumbers[i].events.onInputOver.add(this.overNumber, this);
-					this.arrImgNumbers[i].visible = false;
-			}
 	},
 
 	actionOnClickDone: function() {
@@ -175,16 +150,27 @@ WordTrack.TraceWord.prototype = {
 					var minY = this.background.y - this.background.height/2;
 					var maxY = this.background.y + this.background.height/2;
 					if((minX < x && x < maxX) && (minY < y && y < maxY)) {
-								this.bmd.circle(x, y, 10, '#00CC00');
+								this.bmd.circle(x, y, 10, 'rgba(128, 255, 0, 0.1)');
 					}
 			}
 	},
 
 	overNumber: function(obj) {
 			if(this.input.mousePointer.isDown && this.arrResult.indexOf(obj) == -1) {
+					console.log("overNumber" + obj);
 					this.arrResult.push(obj);
+					if(this.compareArrays(this.arrResult, [this.imgOne, this.imgTwo, this.imgThree])) {
+							console.log("sucess draw");
+					}
 			}
 	},
+
+	compareArrays: function(array1, array2) {
+    if (array1.length === array2.length)
+        return array1.every((a, index) => a === array2[index]);
+    else
+        return false;
+  },
 
 	update: function() {
 	},
@@ -225,9 +211,15 @@ WordTrack.TraceWord.prototype = {
 																									jsonNumber[i].draw[0].numbers[lengthNum].y, 'star');
 							this.star.anchor.setTo(0.5, 0.5);
 							this.add.tween(this.star).to( { alpha: 0.2 }, 400, "Linear", true ,0 , -1 , true);
-							this.star.inputEnabled = true;
-							this.star.events.onInputDown.add(this.overStar, this);
-							this.star.events.onInputOver.add(this.overStar, this);
+
+							//set position for numbers
+							console.log("jsonNumber[i].draw[0].numbers.length: " + jsonNumber[i].draw[0].numbers.length);
+							for(var k = 0 ; k < jsonNumber[i].draw[0].numbers.length ; k++) {
+									console.log('jsonNumber[i].draw[0].numbers[0].x: ' + jsonNumber[i].draw[0].numbers[k].x);
+									console.log('jsonNumber[i].draw[0].numbers[0].y: ' + jsonNumber[i].draw[0].numbers[k].y);
+									// this.arrImgNumbers[i].x = jsonNumber[i].draw[0].numbers[k].x;
+									// this.arrImgNumbers[i].y = jsonNumber[i].draw[0].numbers[k].y;
+							}
 					}
 			}
 
@@ -235,23 +227,5 @@ WordTrack.TraceWord.prototype = {
 			this.imgAlphaBet.loadTexture(word);
 			this.imgAlphaBet.visible = true;
 			this.iconImg.visible = true;
-
-			// console.log('jsonNumber[word].length = ' + jsonNumber[word].length);
-			// this.totalNumbers = jsonNumber[word].length;
-			//
-			// for(var i = 0 ; i < jsonNumber[word].length ; i++) {
-			// 		console.log('test :' + i);
-			// 		this.arrImgNumbers[i]['x'] = jsonNumber[word][i]['x'];
-			// 		this.arrImgNumbers[i]['y'] = jsonNumber[word][i]['y'];
-			// 		this.arrImgNumbers[i].visible = true;
-			// }
-	},
-
-	overStar: function(obj) {
-			console.log('Over star');
-			this.currentPartWordDrawing++;
-			// this.dashline.loadTexture(jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].key);
-			// this.dashline.x = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].x;
-			// this.dashline.y = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].y;
 	}
 };
