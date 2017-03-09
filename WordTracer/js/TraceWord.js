@@ -116,6 +116,11 @@ WordTrack.TraceWord.prototype = {
 			this.btnDone.visible = true;
 			this.txtBadDraw.visible = false;
 			this.btnTryAgain.visible = false;
+
+			this.groupDashLines.getChildAt(0).alpha = 1;
+			for(i = 1 ; i < this.groupDashLines.total ; i++) {
+					this.groupDashLines.getChildAt(i).alpha = 0;
+			}
 	},
 
 	actionOnClickNextWord: function() {
@@ -161,8 +166,13 @@ WordTrack.TraceWord.prototype = {
 							this.arrResult = [];
 							this.currentPartWordDrawing++;
 							if(this.currentPartWordDrawing < jsonNumber[this.currentAlphabet].draw.length) {
-									this.groupDashLines.removeChildAt(0);
-									this.groupDashLines.getChildAt(0).alpha = 1;
+									for (var i = 0 ; i < this.groupDashLines.total ; i++) {
+											if(this.currentPartWordDrawing === i) {
+													this.groupDashLines.getChildAt(i).alpha = 1;
+											}else{
+													this.groupDashLines.getChildAt(i).alpha = 0;
+											}
+									}
 
 									for(var i = 0 ; i < 3 ; i++) {
 											this.groupNumbers.getChildAt(i).x =
