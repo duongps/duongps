@@ -1,34 +1,34 @@
 WordTrack.Preloader = function(game){
 		//local web can not use json file so that temparory use local data
 		this.jsonObjNumber = '[{"word":"A", "image": "A.png",\
-															"draw":[{"key":"A1", "image":"dashlineA_1.png","x": 336.5, "y": 236, "angleArrow": 110\
+															"draw":[{"key":"A1", "image":"dashlineA_1.png","x": 336.5, "y": 236\
 																						,"numbers":[{"x": 375, "y": 130},\
 																												{"x": 338, "y":  233},\
 																												{"x": 300, "y":  342}]},\
-																			{"key":"A2", "image":"dashlineA_2.png","x": 411.5, "y": 236, "angleArrow": 70\
+																			{"key":"A2", "image":"dashlineA_2.png","x": 411.5, "y": 236\
 																						 ,"numbers":[{"x": 375, "y":  130},\
 																												{"x": 411, "y":  233},\
 																												{"x": 449, "y":  341}]},\
-																			{"key":"A3", "image":"dashlineA_3.png","x": 374, "y": 265, "angleArrow": 0\
+																			{"key":"A3", "image":"dashlineA_3.png","x": 374, "y": 265\
 																		 				,"numbers":[{"x": 327, "y":  265},\
 																												{"x": 423, "y":  266}]}\
 																			]},\
 													{"word":"B", "image": "B.png",\
-															"draw":[{"key":"B1", "image":"dashlineB_1.png","x": 328, "y": 235, "angleArrow": 90\
+															"draw":[{"key":"B1", "image":"dashlineB_1.png","x": 328, "y": 235\
 															 							,"numbers":[{"x": 327, "y": 137},\
 																												{"x": 327, "y":  230},\
 																												{"x": 327, "y":  334}]},\
-																		 {"key":"B2", "image":"dashlineB_2.png","x": 376, "y": 183, "angleArrow": -3\
+																		 {"key":"B2", "image":"dashlineB_2.png","x": 376, "y": 183\
 																		  			,"numbers":[{"x": 327, "y":  137},\
 																												{"x": 425, "y":  165},\
 																												{"x": 327, "y":  230}]},\
-																		 {"key":"B3", "image":"dashlineB_3.png","x": 381, "y": 282, "angleArrow": 0\
+																		 {"key":"B3", "image":"dashlineB_3.png","x": 381, "y": 282\
 																		  			,"numbers":[{"x": 327, "y":  230},\
 																												{"x": 425, "y":  300},\
 																												{"x": 327, "y":  334}]}\
 																			]},\
 													{"word":"C", "image": "C.png",\
-															"draw":[{"key":"C1", "image":"dashlineC_1.png","x": 328, "y": 235, "angleArrow": 90\
+															"draw":[{"key":"C1", "image":"dashlineC_1.png","x": 328, "y": 235\
 																						,"numbers":[{"x": 449 , "y": 142},\
 																												{"x": 344, "y":  156},\
 																												{"x": 309, "y": 241},\

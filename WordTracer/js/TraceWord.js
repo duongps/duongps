@@ -27,11 +27,6 @@ WordTrack.TraceWord = function(game){
 		this.currentPartWordDrawing = 0;
 		this.currentAlphabet = 0;
 
-		//this.dashline;
-		this.arrow;
-		this.star;
-		this.tweenstar;
-
 		this.checkDrawDone = false;
 };
 
@@ -86,15 +81,6 @@ WordTrack.TraceWord.prototype = {
 			//add group dashline and numbers
 			this.groupDashLines = this.add.group();
 			this.groupNumbers = this.add.group();
-
-			this.arrow = this.game.add.image(0, 0, 'arrow');
-			this.arrow.anchor.setTo(0, 0.5);
-			this.arrow.alpha = 0;
-
-			this.star = this.game.add.image(0, 0, 'star');
-			this.star.anchor.set(0.5);
-			this.star.alpha = 0;
-			this.tweenstar = this.add.tween(this.star).to( { alpha: 0.8 }, 400, "Linear", true ,0 , -1 , true);
 
 			//init word p first
 			this.initWord(this.arrTextForDraw.shift());
@@ -175,15 +161,6 @@ WordTrack.TraceWord.prototype = {
 							this.arrResult = [];
 							this.currentPartWordDrawing++;
 							if(this.currentPartWordDrawing < jsonNumber[this.currentAlphabet].draw.length) {
-									this.arrow.alpha = 1;
-									this.arrow.x = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[0].x;
-									this.arrow.y = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[0].y;
-									this.arrow.angle = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].angleArrow;
-
-									this.star.alpha = 1;
-									this.star.x = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[2].x;
-									this.star.y = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[2].y;
-
 									this.groupDashLines.removeChildAt(0);
 									this.groupDashLines.getChildAt(0).alpha = 1;
 
@@ -197,9 +174,6 @@ WordTrack.TraceWord.prototype = {
 									this.checkDrawDone = true;
 									this.groupNumbers.removeAll();
 									this.groupDashLines.removeAll();
-									this.tweenstar.stop();
-									this.arrow.alpha = 0;
-									this.star.alpha = 0;
 							}
 					}
 			}
@@ -232,19 +206,9 @@ WordTrack.TraceWord.prototype = {
 																		jsonNumber[i].draw[j].y, jsonNumber[i].draw[j].key);
 									dashline.anchor.set(0.5);
 									if(j != 0) {
-											dashline.alpha = 0.2;
+											dashline.alpha = 0;
 									}
 							}
-							//console.log("jsonNumber[i].draw[0].key : " + jsonNumber[i].draw[0].key);
-							this.arrow.alpha = 1;
-							this.arrow.x = jsonNumber[i].draw[0].numbers[0].x;
-							this.arrow.y = jsonNumber[i].draw[0].numbers[0].y;
-							this.arrow.angle = jsonNumber[i].draw[0].angleArrow;
-
-							this.star.alpha = 1;
-							var lengthNum = jsonNumber[i].draw[0].numbers.length - 1;
-							this.star.x = jsonNumber[i].draw[0].numbers[lengthNum].x;
-							this.star.y = jsonNumber[i].draw[0].numbers[lengthNum].y;
 
 							//set position for numbers
 							for(var k = 0 ; k < jsonNumber[i].draw[0].numbers.length ; k++) {
