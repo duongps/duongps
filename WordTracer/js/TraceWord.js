@@ -17,6 +17,7 @@ WordTrack.TraceWord = function(game){
 		this.groupDashLines;
 
 		this.arrResult = [];
+		this.arrTotalNumber = [];
 
 		//define array save numbers for horver
 		this.arrTextForDraw;
@@ -78,16 +79,16 @@ WordTrack.TraceWord.prototype = {
 			this.imgAlphaBet = this.game.add.image(this.world.centerX, this.world.centerY, 'A');
 			this.imgAlphaBet.anchor.set(0.5);
 
+			this.bmd = this.add.bitmapData(800, 600);
+			this.drawImage = this.add.sprite(0, 0, this.bmd);
+		  this.input.addMoveCallback(this.paint, this);
+
 			//add group dashline and numbers
 			this.groupDashLines = this.add.group();
 			this.groupNumbers = this.add.group();
 
 			//init word p first
 			this.initWord(this.arrTextForDraw.shift());
-
-			this.bmd = this.add.bitmapData(800, 600);
-			this.drawImage = this.add.sprite(0, 0, this.bmd);
-		  this.input.addMoveCallback(this.paint, this);
 	},
 
 	actionOnClickDone: function() {
@@ -148,7 +149,7 @@ WordTrack.TraceWord.prototype = {
 					var minY = this.background.y - this.background.height/2;
 					var maxY = this.background.y + this.background.height/2;
 					if((minX < x && x < maxX) && (minY < y && y < maxY)) {
-								this.bmd.circle(x, y, 10, 'rgba(255,0,255,0.1)');
+								this.bmd.circle(x, y, 10, '#FF9999');
 					}
 			}
 	},
@@ -161,7 +162,9 @@ WordTrack.TraceWord.prototype = {
 					var jsonObjNumber = this.state.states['Preloader'].jsonObjNumber;
 					jsonNumber = JSON.parse(jsonObjNumber);
 
-					if(this.compareArrays(this.arrResult, [0, 1, 2])) {
+					//console.log("this.arrResult: " + this.arrResult);
+					//console.log("this.arrTotalNumber: " + this.arrTotalNumber);
+					if(this.compareArrays(this.arrResult, this.arrTotalNumber)) {
 							console.log("sucess draw");
 							this.arrResult = [];
 							this.currentPartWordDrawing++;
@@ -174,11 +177,22 @@ WordTrack.TraceWord.prototype = {
 											}
 									}
 
-									for(var i = 0 ; i < 3 ; i++) {
-											this.groupNumbers.getChildAt(i).x =
-															jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[i].x;
-											this.groupNumbers.getChildAt(i).y =
-															jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[i].y;
+									console.log("this.currentAlphabet: " + this.currentAlphabet);
+									console.log("this.currentPartWordDrawing: " + this.currentPartWordDrawing);
+
+									//set position for numbers
+									this.groupNumbers.removeAll();
+									this.arrTotalNumber = [];
+									for(var k = 0 ; k < jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers.length ; k++) {
+											this.arrTotalNumber.push(k);
+											var number = this.groupNumbers.create(
+															jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[k].x,
+															jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[k].y, k + 1);
+											number.anchor.set(0.5);
+											number.inputEnabled = true;
+											number.events.onInputDown.add(this.overNumber, this);
+											number.events.onInputOver.add(this.overNumber, this);
+											number.alpha = 0;
 									}
 							}else {
 									this.checkDrawDone = true;
@@ -221,7 +235,9 @@ WordTrack.TraceWord.prototype = {
 							}
 
 							//set position for numbers
+							this.arrTotalNumber = [];
 							for(var k = 0 ; k < jsonNumber[i].draw[0].numbers.length ; k++) {
+									this.arrTotalNumber.push(k);
 									var number = this.groupNumbers.create(jsonNumber[i].draw[0].numbers[k].x,
 																		jsonNumber[i].draw[0].numbers[k].y, k + 1);
 									number.anchor.set(0.5);
