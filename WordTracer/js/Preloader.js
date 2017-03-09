@@ -1,15 +1,15 @@
 WordTrack.Preloader = function(game){
 		//local web can not use json file so that temparory use local data
 		this.jsonObjNumber = '[{"word":"A", "image": "A.png",\
-															"draw":[{"key":"A1", "image":"dashlineA_1.png","x": 328, "y": 235, "angleArrow": 90\
+															"draw":[{"key":"A1", "image":"dashlineA_1.png","x": 336.5, "y": 236, "angleArrow": 110\
 																						,"numbers":[{"x": 375, "y": 130},\
 																												{"x": 338, "y":  233},\
 																												{"x": 300, "y":  342}]},\
-																			{"key":"A2", "image":"dashlineA_2.png","x": 328, "y": 235, "angleArrow": 90\
+																			{"key":"A2", "image":"dashlineA_2.png","x": 411.5, "y": 236, "angleArrow": 70\
 																						 ,"numbers":[{"x": 375, "y":  130},\
 																												{"x": 411, "y":  233},\
 																												{"x": 449, "y":  341}]},\
-																			{"key":"A3", "image":"dashlineA_3.png","x": 328, "y": 235, "angleArrow": 90\
+																			{"key":"A3", "image":"dashlineA_3.png","x": 374, "y": 265, "angleArrow": 0\
 																		 				,"numbers":[{"x": 327, "y":  265},\
 																												{"x": 423, "y":  266}]}\
 																			]},\
@@ -18,11 +18,11 @@ WordTrack.Preloader = function(game){
 															 							,"numbers":[{"x": 327, "y": 137},\
 																												{"x": 327, "y":  230},\
 																												{"x": 327, "y":  334}]},\
-																		 {"key":"B2", "image":"dashlineB_2.png","x": 376, "y": 183, "angleArrow": 90\
+																		 {"key":"B2", "image":"dashlineB_2.png","x": 376, "y": 183, "angleArrow": -3\
 																		  			,"numbers":[{"x": 327, "y":  137},\
 																												{"x": 425, "y":  165},\
 																												{"x": 327, "y":  230}]},\
-																		 {"key":"B3", "image":"dashlineB_3.png","x": 381, "y": 282, "angleArrow": 90\
+																		 {"key":"B3", "image":"dashlineB_3.png","x": 381, "y": 282, "angleArrow": 0\
 																		  			,"numbers":[{"x": 327, "y":  230},\
 																												{"x": 425, "y":  300},\
 																												{"x": 327, "y":  334}]}\
@@ -249,48 +249,10 @@ WordTrack.Preloader.prototype = {
 				}
 		}
 
-		//add image word
-		// this.load.image('A', 'img/alphabet/A.png');
-		// this.load.image('B', 'img/alphabet/B.png');
-		//
-		// this.load.image('C', 'img/alphabet/C.png');
-		// this.load.image('dashlineC', 'img/alphabet/dashlineC.png');
-		//
-		// this.load.image('D', 'img/alphabet/D.png');
-		// this.load.image('E', 'img/alphabet/E.png');
-		// this.load.image('F', 'img/alphabet/F.png');
-		// this.load.image('G', 'img/alphabet/G.png');
-		// this.load.image('H', 'img/alphabet/H.png');
-		// this.load.image('I', 'img/alphabet/I.png');
-		// this.load.image('J', 'img/alphabet/J.png');
-		// this.load.image('K', 'img/alphabet/K.png');
-		// this.load.image('L', 'img/alphabet/L.png');
-		// this.load.image('M', 'img/alphabet/M.png');
-		// this.load.image('N', 'img/alphabet/N.png');
-		// this.load.image('O', 'img/alphabet/O.png');
-		// this.load.image('P', 'img/alphabet/P.png');
-		// this.load.image('Q', 'img/alphabet/Q.png');
-		// this.load.image('R', 'img/alphabet/R.png');
-		// this.load.image('S', 'img/alphabet/S.png');
-		// this.load.image('T', 'img/alphabet/T.png');
-		// this.load.image('U', 'img/alphabet/U.png');
-		// this.load.image('V', 'img/alphabet/V.png');
-		// this.load.image('W', 'img/alphabet/W.png');
-		// this.load.image('X', 'img/alphabet/X.png');
-		// this.load.image('Y', 'img/alphabet/Y.png');
-		// this.load.image('Z', 'img/alphabet/Z.png');
-
 		//add image number
-		// this.load.image('0', 'img/number/0.png');
 		this.load.image('1', 'img/number/1.png');
 		this.load.image('2', 'img/number/2.png');
 		this.load.image('3', 'img/number/3.png');
-		// this.load.image('4', 'img/number/4.png');
-		// this.load.image('5', 'img/number/5.png');
-		// this.load.image('6', 'img/number/6.png');
-		// this.load.image('7', 'img/number/7.png');
-		// this.load.image('8', 'img/number/8.png');
-		// this.load.image('9', 'img/number/9.png');
 
 		this.load.image('star', 'img/star.png');
 		this.load.image('arrow', 'img/arrow.png');

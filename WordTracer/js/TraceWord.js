@@ -23,8 +23,6 @@ WordTrack.TraceWord = function(game){
 
 		this.bmd;
 		this.drawImage;
-		this.isDrawing = true;
-		this.countDraw = 0;
 
 		this.currentPartWordDrawing = 0;
 		this.currentAlphabet = 0;
@@ -32,6 +30,9 @@ WordTrack.TraceWord = function(game){
 		//this.dashline;
 		this.arrow;
 		this.star;
+		this.tweenstar;
+
+		this.checkDrawDone = false;
 };
 
 WordTrack.TraceWord.prototype = {
@@ -79,6 +80,22 @@ WordTrack.TraceWord.prototype = {
 			this.iconImg = this.game.add.image(265, 80, this.state.states['MainMenu'].wordDraw);
 			this.iconImg.scale.set(0.5);
 
+			this.imgAlphaBet = this.game.add.image(this.world.centerX, this.world.centerY, 'A');
+			this.imgAlphaBet.anchor.set(0.5);
+
+			//add group dashline and numbers
+			this.groupDashLines = this.add.group();
+			this.groupNumbers = this.add.group();
+
+			this.arrow = this.game.add.image(0, 0, 'arrow');
+			this.arrow.anchor.setTo(0, 0.5);
+			this.arrow.alpha = 0;
+
+			this.star = this.game.add.image(0, 0, 'star');
+			this.star.anchor.set(0.5);
+			this.star.alpha = 0;
+			this.tweenstar = this.add.tween(this.star).to( { alpha: 0.8 }, 400, "Linear", true ,0 , -1 , true);
+
 			//init word p first
 			this.initWord(this.arrTextForDraw.shift());
 
@@ -88,25 +105,21 @@ WordTrack.TraceWord.prototype = {
 	},
 
 	actionOnClickDone: function() {
-			// if(this.arrResult.length == this.totalNumbers){
-			// 		console.log('well done');
-			// 		this.btnDone.visible = false;
-			// 		this.txtWellDone.visible = true;
-			// 		this.btnNextWord.visible = true;
-			// 		this.imgAlphaBet.visible = false;
-			// 		this.iconImg.visible = false;
-			// 		this.add.tween(this.imgStarWellDone).to( { x: 640 }, 500, "Linear", true);
-			// 		this.add.tween(this.imgStarWellDone.scale).to({x: 1.3, y: 1.3}, 700, "Linear", true, 0 , -1, true);
-			//
-			// 		this.isDrawing = false;
-			// }else {
-			// 		console.log('bad draw');
-			// 		this.btnDone.visible = false;
-			// 		this.txtBadDraw.visible = true;
-			// 		this.btnTryAgain.visible = true;
-			//
-			// 		this.isDrawing = false;
-			// }
+			if(this.checkDrawDone){
+					console.log('well done');
+					this.btnDone.visible = false;
+					this.txtWellDone.visible = true;
+					this.btnNextWord.visible = true;
+					this.imgAlphaBet.visible = false;
+					this.iconImg.visible = false;
+					this.add.tween(this.imgStarWellDone).to( { x: 640 }, 500, "Linear", true);
+					this.add.tween(this.imgStarWellDone.scale).to({x: 1.3, y: 1.3}, 700, "Linear", true, 0 , -1, true);
+			}else {
+					console.log('bad draw');
+					this.btnDone.visible = false;
+					this.txtBadDraw.visible = true;
+					this.btnTryAgain.visible = true;
+			}
 	},
 
 	actionOnClickTryAgain: function() {
@@ -117,8 +130,6 @@ WordTrack.TraceWord.prototype = {
 			this.btnDone.visible = true;
 			this.txtBadDraw.visible = false;
 			this.btnTryAgain.visible = false;
-
-			this.isDrawing = true;
 	},
 
 	actionOnClickNextWord: function() {
@@ -134,8 +145,6 @@ WordTrack.TraceWord.prototype = {
 					this.btnDone.visible = true;
 					this.txtWellDone.visible = false;
 					this.btnNextWord.visible = false;
-
-					this.isDrawing = true;
 			}
 	},
 
@@ -148,36 +157,49 @@ WordTrack.TraceWord.prototype = {
 					var minY = this.background.y - this.background.height/2;
 					var maxY = this.background.y + this.background.height/2;
 					if((minX < x && x < maxX) && (minY < y && y < maxY)) {
-								this.bmd.circle(x, y, 10, 'rgba(128, 255, 0, 0.1)');
+								this.bmd.circle(x, y, 10, 'rgba(255,0,255,0.1)');
 					}
 			}
 	},
 
 	overNumber: function(obj) {
-			if(this.input.mousePointer.isDown && this.arrResult.indexOf(obj) == -1) {
-					var index = this.groupNumbers.getIndex(obj);
+			var index = this.groupNumbers.getIndex(obj);
+			if(this.input.mousePointer.isDown && this.arrResult.indexOf(index) == -1) {
 					this.arrResult.push(index);
+
+					var jsonObjNumber = this.state.states['Preloader'].jsonObjNumber;
+					jsonNumber = JSON.parse(jsonObjNumber);
+
 					if(this.compareArrays(this.arrResult, [0, 1, 2])) {
 							console.log("sucess draw");
 							this.arrResult = [];
 							this.currentPartWordDrawing++;
-							var jsonObjNumber = this.state.states['Preloader'].jsonObjNumber;
-							jsonNumber = JSON.parse(jsonObjNumber);
+							if(this.currentPartWordDrawing < jsonNumber[this.currentAlphabet].draw.length) {
+									this.arrow.alpha = 1;
+									this.arrow.x = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[0].x;
+									this.arrow.y = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[0].y;
+									this.arrow.angle = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].angleArrow;
 
-							this.arrow.x = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[0].x;
-							this.arrow.y = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[0].y;
+									this.star.alpha = 1;
+									this.star.x = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[2].x;
+									this.star.y = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[2].y;
 
-							this.star.x = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[2].x;
-							this.star.y = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[2].y;
+									this.groupDashLines.removeChildAt(0);
+									this.groupDashLines.getChildAt(0).alpha = 1;
 
-							this.groupDashLines.removeChildAt(0);
-							this.groupDashLines.getChildAt(0).alpha = 1;
-
-							for(var i = 0 ; i < 3 ; i++) {
-									this.groupNumbers.getChildAt(i).x =
-													jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[i].x;
-									this.groupNumbers.getChildAt(i).y =
-													jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[i].y;
+									for(var i = 0 ; i < 3 ; i++) {
+											this.groupNumbers.getChildAt(i).x =
+															jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[i].x;
+											this.groupNumbers.getChildAt(i).y =
+															jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[i].y;
+									}
+							}else {
+									this.checkDrawDone = true;
+									this.groupNumbers.removeAll();
+									this.groupDashLines.removeAll();
+									this.tweenstar.stop();
+									this.arrow.alpha = 0;
+									this.star.alpha = 0;
 							}
 					}
 			}
@@ -196,19 +218,16 @@ WordTrack.TraceWord.prototype = {
 	initWord: function(word){
 			console.log('load word: ' + word);
 			this.currentPartWordDrawing = 0;
+			this.checkDrawDone = false;
 			var jsonObjNumber = this.state.states['Preloader'].jsonObjNumber;
 			jsonNumber = JSON.parse(jsonObjNumber);
-
-			this.imgAlphaBet = this.game.add.image(this.world.centerX, this.world.centerY, word);
-			this.imgAlphaBet.anchor.setTo(0.5, 0.5);
 
 			for(var i = 0 ; i < jsonNumber.length; i ++) {
 					console.log("jsonNumber[i].word : " + jsonNumber[i].word);
 					if(jsonNumber[i].word === word) {
 							this.currentAlphabet = i;
-							this.groupDashLines = this.add.group();
 							for(var j = 0 ; j < jsonNumber[i].draw.length ; j++) {
-									console.log("jsonNumber[i].draw[j].image : " + jsonNumber[i].draw[j].image);
+									//console.log("jsonNumber[i].draw[j].image : " + jsonNumber[i].draw[j].image);
 									var dashline = this.groupDashLines.create(jsonNumber[i].draw[j].x,
 																		jsonNumber[i].draw[j].y, jsonNumber[i].draw[j].key);
 									dashline.anchor.set(0.5);
@@ -216,20 +235,17 @@ WordTrack.TraceWord.prototype = {
 											dashline.alpha = 0.2;
 									}
 							}
-							console.log("jsonNumber[i].draw[0].key : " + jsonNumber[i].draw[0].key);
-
-							this.arrow = this.game.add.image(jsonNumber[i].draw[0].numbers[0].x,
-																									jsonNumber[i].draw[0].numbers[0].y, 'arrow');
-							this.arrow.anchor.setTo(0, 0.5);
+							//console.log("jsonNumber[i].draw[0].key : " + jsonNumber[i].draw[0].key);
+							this.arrow.alpha = 1;
+							this.arrow.x = jsonNumber[i].draw[0].numbers[0].x;
+							this.arrow.y = jsonNumber[i].draw[0].numbers[0].y;
 							this.arrow.angle = jsonNumber[i].draw[0].angleArrow;
 
+							this.star.alpha = 1;
 							var lengthNum = jsonNumber[i].draw[0].numbers.length - 1;
-							this.star = this.game.add.image(jsonNumber[i].draw[0].numbers[lengthNum].x,
-																									jsonNumber[i].draw[0].numbers[lengthNum].y, 'star');
-							this.star.anchor.setTo(0.5, 0.5);
-							this.add.tween(this.star).to( { alpha: 0.2 }, 400, "Linear", true ,0 , -1 , true);
+							this.star.x = jsonNumber[i].draw[0].numbers[lengthNum].x;
+							this.star.y = jsonNumber[i].draw[0].numbers[lengthNum].y;
 
-							this.groupNumbers = this.add.group();
 							//set position for numbers
 							for(var k = 0 ; k < jsonNumber[i].draw[0].numbers.length ; k++) {
 									var number = this.groupNumbers.create(jsonNumber[i].draw[0].numbers[k].x,
@@ -238,7 +254,7 @@ WordTrack.TraceWord.prototype = {
 									number.inputEnabled = true;
 									number.events.onInputDown.add(this.overNumber, this);
 									number.events.onInputOver.add(this.overNumber, this);
-									number.alpha = 1;
+									number.alpha = 0;
 							}
 					}
 			}
