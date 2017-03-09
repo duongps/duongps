@@ -16,12 +16,12 @@ WordTrack.TraceWord = function(game){
 		this.imgOne;
 		this.imgTwo;
 		this.imgThree;
-		this.imgFour;
-		this.imgFive;
-		this.imgSix;
-		this.imgSeven;
-		this.imgEight;
-		this.imgNine;
+		// this.imgFour;
+		// this.imgFive;
+		// this.imgSix;
+		// this.imgSeven;
+		// this.imgEight;
+		// this.imgNine;
 
 		this.arrImgNumbers = [];
 
@@ -35,6 +35,13 @@ WordTrack.TraceWord = function(game){
 		this.drawImage;
 		this.isDrawing = true;
 		this.countDraw = 0;
+
+		this.currentPartWordDrawing = 0;
+		this.currentAlphabet = 0;
+
+		//this.dashline;
+		this.arrow;
+		this.star;
 };
 
 WordTrack.TraceWord.prototype = {
@@ -82,17 +89,6 @@ WordTrack.TraceWord.prototype = {
 			this.iconImg = this.game.add.image(265, 80, this.state.states['MainMenu'].wordDraw);
 			this.iconImg.scale.set(0.5);
 
-			this.imgAlphaBet = this.game.add.image(this.world.centerX, this.world.centerY, 'P');
-			this.imgAlphaBet.anchor.setTo(0.5, 0.5);
-			var dashline = this.game.add.image(this.world.centerX - 5, this.world.centerY - 13.75, 'dashlineC');
-			dashline.anchor.setTo(0.5, 0.5);
-			var arrow = this.game.add.image(460, 145, 'arrow');
-			arrow.anchor.setTo(0, 0.5);
-			arrow.angle = 190;
-			var star = this.game.add.image(449, 328, 'star');
-			star.anchor.setTo(0.5, 0.5);
-			this.add.tween(star).to( { alpha: 0.2 }, 400, "Linear", true ,0 , -1 , true);
-
 			//add all image number from 1 to 9 and set visible to false
 			this.addImageNumbers();
 
@@ -106,8 +102,7 @@ WordTrack.TraceWord.prototype = {
 
 	addImageNumbers: function() {
 			//store numbers 1->9 to array
-			this.arrImgNumbers.push(this.imgOne, this.imgTwo, this.imgThree, this.imgFour,
-				 													this.imgFive, this.imgSix, this.imgSeven, this.imgEight, this.imgNine);
+			this.arrImgNumbers.push(this.imgOne, this.imgTwo, this.imgThree);
 
 			for(var i = 0 ; i < this.arrImgNumbers.length ; i++) {
 					this.arrImgNumbers[i] = this.add.sprite(0, 0, i + 1);
@@ -115,6 +110,7 @@ WordTrack.TraceWord.prototype = {
 					this.arrImgNumbers[i].inputEnabled = true;
 					this.arrImgNumbers[i].events.onInputDown.add(this.overNumber, this);
 					this.arrImgNumbers[i].events.onInputOver.add(this.overNumber, this);
+					this.arrImgNumbers[i].visible = false;
 			}
 	},
 
@@ -195,22 +191,67 @@ WordTrack.TraceWord.prototype = {
 
 	initWord: function(word){
 			console.log('load word: ' + word);
+			this.currentPartWordDrawing = 0;
 			var jsonObjNumber = this.state.states['Preloader'].jsonObjNumber;
 			jsonNumber = JSON.parse(jsonObjNumber);
+
+			this.imgAlphaBet = this.game.add.image(this.world.centerX, this.world.centerY, word);
+			this.imgAlphaBet.anchor.setTo(0.5, 0.5);
+
+			for(var i = 0 ; i < jsonNumber.length; i ++) {
+					console.log("jsonNumber[i].word : " + jsonNumber[i].word);
+					if(jsonNumber[i].word === word) {
+							this.currentAlphabet = i;
+							for(var j = 0 ; j < jsonNumber[i].draw.length ; j++) {
+									console.log("jsonNumber[i].draw[j].image : " + jsonNumber[i].draw[j].image);
+									var dashline = this.game.add.image(jsonNumber[i].draw[j].x,
+																		jsonNumber[i].draw[j].y, jsonNumber[i].draw[j].key);
+									dashline.anchor.setTo(0.5, 0.5);
+									if(j != 0) {
+											dashline.alpha = 0.2;
+									}
+							}
+							console.log("jsonNumber[i].draw[0].x : " + jsonNumber[i].draw[0].x);
+							console.log("jsonNumber[i].draw[0].y : " + jsonNumber[i].draw[0].y);
+							console.log("jsonNumber[i].draw[0].key : " + jsonNumber[i].draw[0].key);
+
+							this.arrow = this.game.add.image(jsonNumber[i].draw[0].numbers[0].x,
+																									jsonNumber[i].draw[0].numbers[0].y, 'arrow');
+							this.arrow.anchor.setTo(0, 0.5);
+							this.arrow.angle = jsonNumber[i].draw[0].angleArrow;
+
+							var lengthNum = jsonNumber[i].draw[0].numbers.length - 1;
+							this.star = this.game.add.image(jsonNumber[i].draw[0].numbers[lengthNum].x,
+																									jsonNumber[i].draw[0].numbers[lengthNum].y, 'star');
+							this.star.anchor.setTo(0.5, 0.5);
+							this.add.tween(this.star).to( { alpha: 0.2 }, 400, "Linear", true ,0 , -1 , true);
+							this.star.inputEnabled = true;
+							this.star.events.onInputDown.add(this.overStar, this);
+							this.star.events.onInputOver.add(this.overStar, this);
+					}
+			}
 
 			this.imgStarWellDone.x = 850;
 			this.imgAlphaBet.loadTexture(word);
 			this.imgAlphaBet.visible = true;
 			this.iconImg.visible = true;
 
-			console.log('jsonNumber[word].length = ' + jsonNumber[word].length);
-			this.totalNumbers = jsonNumber[word].length;
+			// console.log('jsonNumber[word].length = ' + jsonNumber[word].length);
+			// this.totalNumbers = jsonNumber[word].length;
+			//
+			// for(var i = 0 ; i < jsonNumber[word].length ; i++) {
+			// 		console.log('test :' + i);
+			// 		this.arrImgNumbers[i]['x'] = jsonNumber[word][i]['x'];
+			// 		this.arrImgNumbers[i]['y'] = jsonNumber[word][i]['y'];
+			// 		this.arrImgNumbers[i].visible = true;
+			// }
+	},
 
-			for(var i = 0 ; i < jsonNumber[word].length ; i++) {
-					console.log('test :' + i);
-					this.arrImgNumbers[i]['x'] = jsonNumber[word][i]['x'];
-					this.arrImgNumbers[i]['y'] = jsonNumber[word][i]['y'];
-					//this.arrImgNumbers[i].visible = true;
-			}
+	overStar: function(obj) {
+			console.log('Over star');
+			this.currentPartWordDrawing++;
+			// this.dashline.loadTexture(jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].key);
+			// this.dashline.x = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].x;
+			// this.dashline.y = jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].y;
 	}
 };
