@@ -35,7 +35,7 @@ WordTrack.WordDone.prototype = {
 	},
 
 	nextWord: function() {
-		// start the Game state
-		//this.state.start('Game');
+			// start the Game state
+			this.state.start('MainMenu');
 	}
 };
