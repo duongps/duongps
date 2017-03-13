@@ -79,8 +79,10 @@ WordTrack.TraceWord.prototype = {
 			this.imgAlphaBet = this.game.add.image(this.world.centerX, this.world.centerY, 'A');
 			this.imgAlphaBet.anchor.set(0.5);
 
-			this.bmd = this.add.bitmapData(800, 600);
-			this.drawImage = this.add.sprite(0, 0, this.bmd);
+			this.bmd = this.add.bitmapData(this.background.width, this.background.height);
+			//this.bmd.fill(51, 255, 255, 1);
+			this.drawImage = this.add.sprite(this.world.centerX, this.world.centerY, this.bmd);
+			this.drawImage.anchor.set(0.5);
 		  this.input.addMoveCallback(this.paint, this);
 
 			//add group dashline and numbers
@@ -226,7 +228,7 @@ WordTrack.TraceWord.prototype = {
 					var minY = this.background.y - this.background.height/2;
 					var maxY = this.background.y + this.background.height/2;
 					if((minX < x && x < maxX) && (minY < y && y < maxY)) {
-								this.bmd.circle(x, y, 10, this.colorDrawing);
+							this.bmd.circle(x - minX, y - minY, 10, this.colorDrawing);
 					}
 			}
 	},
@@ -289,6 +291,9 @@ WordTrack.TraceWord.prototype = {
 									this.iconImg.visible = false;
 									this.add.tween(this.imgStarWellDone).to( { x: 640 }, 500, "Linear", true);
 									this.add.tween(this.imgStarWellDone.scale).to({x: 1.3, y: 1.3}, 700, "Linear", true, 0 , -1, true);
+
+									console.log("export key: " + "export" + jsonNumber[this.currentAlphabet].word);
+									var texture = this.bmd.generateTexture("export" + jsonNumber[this.currentAlphabet].word);
 							}
 					}
 			}

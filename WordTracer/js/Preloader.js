@@ -341,6 +341,7 @@ WordTrack.Preloader.prototype = {
 		jsonWord = JSON.parse(jsonObjWord);
 		//add image word
 		for(var i = 0 ; i < jsonWord.word.length ; i++) {
+				console.log("jsonWord.word[i].text: " + jsonWord.word[i].text);
 				this.load.image(jsonWord.word[i].text, 'img/word/' + jsonWord.word[i].image);
 		}
 
