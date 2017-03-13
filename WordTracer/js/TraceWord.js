@@ -234,7 +234,15 @@ WordTrack.TraceWord.prototype = {
 	overNumber: function(obj) {
 			var index = this.groupNumbers.getIndex(obj);
 			if(this.input.mousePointer.isDown && this.arrResult.indexOf(index) == -1) {
-					this.arrResult.push(index);
+					if(this.arrResult.length === 0) {
+							if(index === 0) {
+									this.arrResult.push(index);
+							}
+					}else if(this.arrResult.length > 0) {
+							if(this.arrResult[this.arrResult.length - 1] === index - 1) {
+									this.arrResult.push(index);
+							}
+					}
 
 					var jsonObjNumber = this.state.states['Preloader'].jsonObjNumber;
 					jsonNumber = JSON.parse(jsonObjNumber);
