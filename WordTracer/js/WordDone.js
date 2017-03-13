@@ -1,6 +1,8 @@
 WordTrack.WordDone = function(game){
 		this.wordDraw;
 		this.arrTextForDraw = [];
+		this.scaleRatio = 1.2;
+		this.scaleAlphabet = 0.25;
 };
 
 WordTrack.WordDone.prototype = {
@@ -15,22 +17,20 @@ WordTrack.WordDone.prototype = {
 			var textLearnWord = this.add.text(this.world.centerX, 40, 'No.1	word', {font: "23px Verdana", fill: '#FFFFFF'});
 			textLearnWord.anchor.setTo(0.5, 0);
 
-			// var img = this.game.add.image(this.world.centerX, this.world.centerY, 'card');
-			// img.anchor.set(0.5);
-			// img.scale.set(1.2);
-			var alphabetX = 0;
+			var imgWord = this.add.image(this.world.centerX, 100, this.wordDraw);
+			imgWord.anchor.setTo(0.5, 0);
+			imgWord.scale.set(this.scaleRatio);
+
+			var alphabetX = (this.world.width - this.state.states['TraceWord'].cardWidth * this.scaleAlphabet * this.arrTextForDraw.length)/2;
+			var groupAlphabet = this.add.group();
 			for (var i = 0 ; i < this.arrTextForDraw.length ; i ++) {
-					var img = this.add.image(alphabetX, this.world.centerY, 'export' + this.arrTextForDraw[i]);
-					img.anchor.set(0.5);
-					img.scale.set(0.3);
-					console.log('alphabetX: ' + alphabetX);
-					alphabetX = alphabetX + img.width;
+					var imgAlphaBet = groupAlphabet.create(alphabetX, imgWord.y + imgWord.height + 20, 'export' + this.arrTextForDraw[i]);
+					imgAlphaBet.anchor.set(0);
+					imgAlphaBet.scale.set(this.scaleAlphabet);
+					alphabetX = alphabetX + imgAlphaBet.width;
 			}
 
-			// var  tick = this.add.image(this.world.centerX , 280, 'tick');
-			// tick.anchor.set(0.5);
-
-			var btn = this.add.button(this.world.centerX, 460, 'btnNextWord', this.nextWord, this);
+			var btn = this.add.button(this.world.centerX, 455, 'btnNextWord', this.nextWord, this);
 			btn.anchor.set(0.5);
 	},
 

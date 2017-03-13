@@ -29,6 +29,9 @@ WordTrack.TraceWord = function(game){
 		this.currentAlphabet = 0;
 
 		this.checkDrawDone = false;
+
+		//get width of card
+		this.cardWidth = 0;
 };
 
 WordTrack.TraceWord.prototype = {
@@ -72,6 +75,7 @@ WordTrack.TraceWord.prototype = {
 			this.background = this.game.add.image(this.world.centerX, this.world.centerY, 'card');
 			this.background.anchor.set(0.5);
 			this.background.scale.set(1.2);
+			this.cardWidth = this.background.width;
 
 			this.iconImg = this.game.add.image(265, 80, this.state.states['MainMenu'].wordDraw);
 			this.iconImg.scale.set(0.5);
