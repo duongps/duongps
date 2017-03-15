@@ -1,21 +1,13 @@
 WordTrack.MainMenu = function(game){
-		this.wordDraw;
+		this.arrWordDraw = [];
 		//define image
 		this.imgNo1;
 		this.imgNo2;
 		this.imgNo3;
 
-		//define ticker for choose image
-		this.tick1;
-		this.tick2;
-		this.tick3;
-		//check choose image or not
-		this.isTick = false;
-
 		this.btnStart;
 
-		this.scaleDefault = 0.9;
-		this.spaceImageNo = 40;
+		this.spaceImageNo = 25;
 		this.spaceWordCardHeight = 20;
 		this.spaceTextCardHeight = 90;
 
@@ -52,7 +44,7 @@ WordTrack.MainMenu.prototype = {
 			textLearnWord.anchor.setTo(0.5, 0);
 
 			//add image
-			var widthImageNo = 180 * this.scaleDefault;
+			var widthImageNo = this.cache.getImage('card').width;
 			var imageNo1X = (this.world.width - 3 * widthImageNo - 2 * this.spaceImageNo) / 2 + widthImageNo / 2;
 			var imageNo2X = imageNo1X + widthImageNo + this.spaceImageNo;
 			var imageNo3X = imageNo2X + widthImageNo + this.spaceImageNo;
@@ -81,70 +73,20 @@ WordTrack.MainMenu.prototype = {
 			this.imgNo3.inputEnabled = true;
 			var imgWord3 = this.add.image(this.imgNo3.x, this.imgNo3.y - this.spaceWordCardHeight, this.jsonWord.word[this.n3].text);
 			imgWord3.anchor.set(0.5);
-			var imgWordText3 = this.add.text(this.imgNo3.x, this.imgNo3.y + this.spaceTextCardHeight, this.jsonWord.word[this.n3].text, {font: "21px Verdana", fill: '#000000'});
+			var imgWordText3 = this.add.text(this.imgNo3.x, this.imgNo3.y + this.spaceTextCardHeight, this.jsonWord.word[this.n3].text,
+																					{font: "21px Verdana", fill: '#000000'});
 			imgWordText3.anchor.set(0.5);
 
-			this.scaleAllImageNo(this.scaleDefault);
-
-			this.tick1 = this.add.image(imageNo1X , 280 + 30, 'tick');
-			this.tick1.anchor.set(0.5);
-			this.tick2 = this.add.image(imageNo2X , 280 + 30, 'tick');
-			this.tick2.anchor.set(0.5);
-			this.tick3 = this.add.image(imageNo3X , 280 + 30, 'tick');
-			this.tick3.anchor.set(0.5);
-
-			this.tick1.visible = false;
-			this.tick2.visible = false;
-			this.tick3.visible = false;
-
-			//set events
-			this.imgNo1.events.onInputDown.add(this.clickImg, this);
-			this.imgNo2.events.onInputDown.add(this.clickImg, this);
-			this.imgNo3.events.onInputDown.add(this.clickImg, this);
-
       //add button start
-      this.btnStart = this.add.button(this.world.centerX, 455, 'btnStart', this.startGame, this, 1, 0, 2);
-      this.btnStart.anchor.set(0.5);
-			this.btnStart.inputEnabled = false;
-	},
-
-	scaleAllImageNo: function(scale) {
-			this.imgNo1.scale.set(scale);
-			this.imgNo2.scale.set(scale);
-			this.imgNo3.scale.set(scale);
-	},
-
-	clickImg: function(obj) {
-			// console.log('click image');
-			this.isTick = true;
-			this.tick1.visible = false;
-			this.tick2.visible = false;
-			this.tick3.visible = false;
+      this.btnStart = this.add.button(this.world.centerX, this.imgNo2.y + this.imgNo2.height/2 + 10,
+																					'btnStart', this.startGame, this, 1, 0, 2);
+      this.btnStart.anchor.setTo(0.5, 0);
 			this.btnStart.inputEnabled = true;
-
-			switch (obj) {
-				case this.imgNo1:
-					this.tick1.visible = true;
-					this.wordDraw = this.jsonWord.word[this.n1].text;
-					break;
-				case this.imgNo2:
-					this.tick2.visible = true;
-					this.wordDraw = this.jsonWord.word[this.n2].text;
-					break;
-				case this.imgNo3:
-					this.tick3.visible = true;
-					this.wordDraw = this.jsonWord.word[this.n3].text;
-					break;
-				default:
-			}
-			this.scaleAllImageNo(this.scaleDefault);
-			obj.scale.set(1);
 	},
 
 	startGame: function() {
-		if(this.isTick) {
 				// start the Game state
+				this.arrWordDraw = [this.jsonWord.word[this.n1].text, this.jsonWord.word[this.n2].text, this.jsonWord.word[this.n3].text];
 				this.state.start('Game');
-		}
 	}
 };

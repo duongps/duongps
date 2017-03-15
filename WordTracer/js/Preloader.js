@@ -367,6 +367,7 @@ WordTrack.Preloader.prototype = {
 		this.load.image('4', 'img/number/4.png');
 		this.load.image('5', 'img/number/5.png');
 
+		this.load.image('penlightpink', 'img/penlightpink.png');
 		this.load.image('penorange', 'img/penorange.png');
 		this.load.image('penblue', 'img/penblue.png');
 		this.load.image('pengreen', 'img/pengreen.png');

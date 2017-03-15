@@ -32,11 +32,12 @@ WordTrack.TraceWord = function(game){
 
 		//get width of card
 		this.cardWidth = 0;
+		this.distanceHeihtWord = 15;
 };
 
 WordTrack.TraceWord.prototype = {
 	create: function(){
-			this.wordDraw = this.state.states['MainMenu'].wordDraw;
+			this.wordDraw = this.state.states['Game'].wordDraw;
 			this.arrTextForDraw = Array.from(this.wordDraw);
 			//add text
 			var textWordTrace = this.add.text(this.world.centerX, 5, 'Word	Tracer', {font: "20px Verdana", fill: '#FFFFFF'});
@@ -77,10 +78,10 @@ WordTrack.TraceWord.prototype = {
 			this.background.scale.set(1.2);
 			this.cardWidth = this.background.width;
 
-			this.iconImg = this.game.add.image(265, 80, this.state.states['MainMenu'].wordDraw);
+			this.iconImg = this.game.add.image(265, 80, this.wordDraw);
 			this.iconImg.scale.set(0.5);
 
-			this.imgAlphaBet = this.game.add.image(this.world.centerX, this.world.centerY, 'A');
+			this.imgAlphaBet = this.game.add.image(this.world.centerX, this.world.centerY + this.distanceHeihtWord, 'A');
 			this.imgAlphaBet.anchor.set(0.5);
 
 			this.bmd = this.add.bitmapData(this.background.width, this.background.height);
@@ -101,21 +102,25 @@ WordTrack.TraceWord.prototype = {
 
 	addPencilColors: function() {
 			this.groupPencils = this.add.group();
-			var space = 60;
-			var penX = 70;
-			var penOrange = this.groupPencils.create(penX, (500 - 5 * space)/2, 'penorange');
+			//var space = 60;
+			var penX = 90;
+			var penY = this.world.height - 70;
+			var penLightPink = this.groupPencils.create(penX, penY, 'penlightpink');
+			penLightPink.anchor.set(0.5);
+			var penOrange = this.groupPencils.create(penLightPink.x + penLightPink.width, penY, 'penorange');
 			penOrange.anchor.set(0.5);
-			var penBlue = this.groupPencils.create(penX, penOrange.y + space, 'penblue');
+			var penBlue = this.groupPencils.create(penOrange.x + penOrange.width, penY, 'penblue');
 			penBlue.anchor.set(0.5);
-			var penGreen = this.groupPencils.create(penX, penBlue.y + space, 'pengreen');
+			var penGreen = this.groupPencils.create(penBlue.x + penBlue.width, penY, 'pengreen');
 			penGreen.anchor.set(0.5);
-			var penPink = this.groupPencils.create(penX, penGreen.y + space, 'penpink');
+			var penPink = this.groupPencils.create(penGreen.x + penGreen.width, penY, 'penpink');
 			penPink.anchor.set(0.5);
-			var penRed = this.groupPencils.create(penX, penPink.y + space, 'penred');
+			var penRed = this.groupPencils.create(penPink.x + penPink.width, penY, 'penred');
 			penRed.anchor.set(0.5);
-			var penViolet = this.groupPencils.create(penX, penRed.y + space, 'penviolet');
+			var penViolet = this.groupPencils.create(penRed.x + penRed.width, penY, 'penviolet');
 			penViolet.anchor.set(0.5);
 
+			penLightPink.inputEnabled = true;
 			penOrange.inputEnabled = true;
 			penBlue.inputEnabled = true;
 			penGreen.inputEnabled = true;
@@ -123,6 +128,7 @@ WordTrack.TraceWord.prototype = {
 			penRed.inputEnabled = true;
 			penViolet.inputEnabled = true;
 
+			penLightPink.events.onInputDown.add(this.actionClickPencil, this);
 			penOrange.events.onInputDown.add(this.actionClickPencil, this);
 			penBlue.events.onInputDown.add(this.actionClickPencil, this);
 			penGreen.events.onInputDown.add(this.actionClickPencil, this);
@@ -135,21 +141,24 @@ WordTrack.TraceWord.prototype = {
 			var indexPenClicked = this.groupPencils.getIndex(obj);
 			switch (indexPenClicked) {
 				case 0:
-						this.colorDrawing = '#FF931E'; //orange
+						this.colorDrawing = '#FF9999'; //orange
 					break;
 				case 1:
-						this.colorDrawing = '#0000FF'; //blue
+						this.colorDrawing = '#FF931E'; //orange
 					break;
 				case 2:
-						this.colorDrawing = '#00FF00'; //green
+						this.colorDrawing = '#0000FF'; //blue
 					break;
 				case 3:
-						this.colorDrawing = '#FF00FF'; //pink
+						this.colorDrawing = '#00FF00'; //green
 					break;
 				case 4:
-						this.colorDrawing = '#FF0000'; //red
+						this.colorDrawing = '#FF00FF'; //pink
 					break;
 				case 5:
+						this.colorDrawing = '#FF0000'; //red
+					break;
+				case 6:
 						this.colorDrawing = '#662D91'; //violet
 					break;
 				default:
@@ -157,11 +166,11 @@ WordTrack.TraceWord.prototype = {
 
 			//set other pecil to default scale
 			for(var i = 0 ; i < this.groupPencils.total ; i++) {
-					this.groupPencils.getChildAt(i).scale.set(1)
+					this.groupPencils.getChildAt(i).y = this.world.height - 70;
 			}
 
 			//change scale of pencil clicked
-			obj.scale.set(1.5);
+			obj.y = obj.y - 20;
 	},
 
 	actionOverButtonNext: function(obj) {
@@ -278,7 +287,8 @@ WordTrack.TraceWord.prototype = {
 											this.arrTotalNumber.push(k);
 											var number = this.groupNumbers.create(
 															jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[k].x,
-															jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[k].y, k + 1);
+															jsonNumber[this.currentAlphabet].draw[this.currentPartWordDrawing].numbers[k].y
+																		+ this.distanceHeihtWord, k + 1);
 											number.anchor.set(0.5);
 											number.inputEnabled = true;
 											number.events.onInputDown.add(this.overNumber, this);
@@ -327,7 +337,7 @@ WordTrack.TraceWord.prototype = {
 							for(var j = 0 ; j < jsonNumber[i].draw.length ; j++) {
 									//console.log("jsonNumber[i].draw[j].image : " + jsonNumber[i].draw[j].image);
 									var dashline = this.groupDashLines.create(jsonNumber[i].draw[j].x,
-																		jsonNumber[i].draw[j].y, jsonNumber[i].draw[j].key);
+																		jsonNumber[i].draw[j].y + this.distanceHeihtWord, jsonNumber[i].draw[j].key);
 									dashline.anchor.set(0.5);
 									if(j != 0) {
 											dashline.alpha = 0;
@@ -339,7 +349,7 @@ WordTrack.TraceWord.prototype = {
 							for(var k = 0 ; k < jsonNumber[i].draw[0].numbers.length ; k++) {
 									this.arrTotalNumber.push(k);
 									var number = this.groupNumbers.create(jsonNumber[i].draw[0].numbers[k].x,
-																		jsonNumber[i].draw[0].numbers[k].y, k + 1);
+																		jsonNumber[i].draw[0].numbers[k].y + this.distanceHeihtWord, k + 1);
 									number.anchor.set(0.5);
 									number.inputEnabled = true;
 									number.events.onInputDown.add(this.overNumber, this);
