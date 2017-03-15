@@ -75,7 +75,7 @@ WordTrack.TraceWord.prototype = {
 			this.background.scale.set(1.2);
 
 			this.iconImg = this.game.add.image(265, 80, this.wordDraw);
-			this.iconImg.scale.set(0.5);
+			this.iconImg.scale.set(0.39);
 
 			this.imgAlphaBet = this.game.add.image(this.world.centerX, this.world.centerY + this.distanceHeihtWord, 'A');
 			this.imgAlphaBet.anchor.set(0.5);
