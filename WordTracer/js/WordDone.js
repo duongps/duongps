@@ -36,6 +36,6 @@ WordTrack.WordDone.prototype = {
 
 	nextWord: function() {
 			// start the Game state
-			this.state.start('MainMenu');
+			this.state.start('Game');
 	}
 };
