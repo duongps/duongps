@@ -279,9 +279,7 @@ WordTrack.TraceWord.prototype = {
 							}
 					}
 
-					var jsonObjNumber = this.state.states['Preloader'].jsonObjNumber;
-					jsonNumber = JSON.parse(jsonObjNumber);
-
+					var jsonNumber = this.cache.getJSON('drawingJson');
 					if(this.compareArrays(this.arrResult, this.arrTotalNumber)) {
 							this.arrResult = [];
 							this.currentPartWordDrawing++;
@@ -340,9 +338,8 @@ WordTrack.TraceWord.prototype = {
 	initWord: function(word){
 			this.checkDrawDone = false;
 			this.currentPartWordDrawing = 0;
-			var jsonObjNumber = this.state.states['Preloader'].jsonObjNumber;
-			jsonNumber = JSON.parse(jsonObjNumber);
 
+			var jsonNumber = this.cache.getJSON('drawingJson');
 			for(var i = 0 ; i < jsonNumber.length; i ++) {
 					if(jsonNumber[i].word === word) {
 							this.currentAlphabet = i;
