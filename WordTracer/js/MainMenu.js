@@ -20,7 +20,6 @@ WordTrack.MainMenu = function(game){
 WordTrack.MainMenu.prototype = {
 	create: function(){
 			this.jsonWord = this.cache.getJSON('wordJson');
-			console.log(this.jsonWord);
 			var maxLength = this.jsonWord.word.length - 1;
 			this.n1 = this.rnd.integerInRange(0, maxLength);
 			this.n2 = this.rnd.integerInRange(0, maxLength);
@@ -41,7 +40,6 @@ WordTrack.MainMenu.prototype = {
 
 			//add image
 			var widthImageNo = this.cache.getImage('card').width;
-			console.log(this.cache.getImage('card').width);
 			var imageNo1X = (this.world.width - 3 * widthImageNo - 2 * this.spaceImageNo) / 2 + widthImageNo / 2;
 			var imageNo2X = imageNo1X + widthImageNo + this.spaceImageNo;
 			var imageNo3X = imageNo2X + widthImageNo + this.spaceImageNo;
