@@ -30,6 +30,8 @@ WordTrack.TraceWord = function(game){
 
 		this.checkDrawDone = false;
 		this.distanceHeihtWord = 15;
+
+		this.music;
 };
 
 WordTrack.TraceWord.prototype = {
@@ -42,10 +44,11 @@ WordTrack.TraceWord.prototype = {
 
 			this.wordDrawing = this.add.text(this.world.centerX, 40, this.wordDraw, {font: "23px Verdana", fill: '#FFFFFF'});
 			this.wordDrawing.anchor.setTo(0.5, 0);
+			this.wordDrawing.addColor('#FCEE21', 0); //yellow color
+			this.wordDrawing.addColor('#FFFFFF', 1); //white color
 
-			//add line trainning
-			var line = this.add.image(this.world.centerX , 36, 'lineTranning');
-			line.anchor.set(0.5);
+			//draw line
+			this.drawLine();
 
 			var btnTryAgain = this.add.image(this.world.centerX - 40, this.world.height - 40,'btnreload');
 			btnTryAgain.anchor.set(0.5);
@@ -94,6 +97,22 @@ WordTrack.TraceWord.prototype = {
 			this.initWord(this.arrTextForDraw.shift());
 
 			this.addPencilColors();
+
+			this.music = this.add.audio('soundMoonlight');
+			this.music.play();
+	},
+
+	drawLine: function(){
+			var graphics = this.add.graphics(0, 0);
+			graphics.lineStyle(8, 0xFFFFFF);
+			graphics.moveTo((this.world.width - 650) / 2,36);
+			graphics.lineTo((this.world.width + 650) / 2, 36);
+
+			graphics.lineStyle(8, 0xFCEE21);
+			graphics.moveTo((this.world.width - 650) / 2,36);
+			graphics.lineTo((this.world.width + 650) / 2 * ((3 - this.state.states['MainMenu'].arrWordDraw.length) / 3), 36);
+
+			window.graphics = graphics;
 	},
 
 	addPencilColors: function() {
@@ -213,7 +232,6 @@ WordTrack.TraceWord.prototype = {
 	},
 
 	actionOnClickNextWord: function() {
-			console.log('this.arrTextForDraw: ' + this.arrTextForDraw);
 			if(this.checkDrawDone) {
 					if(this.arrTextForDraw.length == 0) {
 							this.state.start('WordDone');
@@ -224,6 +242,12 @@ WordTrack.TraceWord.prototype = {
 							this.initWord(this.arrTextForDraw.shift());
 
 							this.txtWellDone.visible = false;
+
+							if(typeof this.wordDrawing != "undefined") {
+									this.wordDrawing.clearColors();
+									this.wordDrawing.addColor('#FCEE21', 0); //yellow color
+									this.wordDrawing.addColor('#FFFFFF', this.wordDraw.length - this.arrTextForDraw.length); //white color
+							}
 					}
 			}
 	},
@@ -258,23 +282,18 @@ WordTrack.TraceWord.prototype = {
 					var jsonObjNumber = this.state.states['Preloader'].jsonObjNumber;
 					jsonNumber = JSON.parse(jsonObjNumber);
 
-					console.log("this.arrResult: " + this.arrResult);
-					console.log("this.arrTotalNumber: " + this.arrTotalNumber);
 					if(this.compareArrays(this.arrResult, this.arrTotalNumber)) {
-							console.log("sucess draw");
 							this.arrResult = [];
 							this.currentPartWordDrawing++;
 							if(this.currentPartWordDrawing < jsonNumber[this.currentAlphabet].draw.length) {
 									for (var i = 0 ; i < this.groupDashLines.total ; i++) {
 											if(this.currentPartWordDrawing === i) {
-													this.groupDashLines.getChildAt(i).alpha = 1;
+													//this.groupDashLines.getChildAt(i).alpha = 1;
+													this.add.tween(this.groupDashLines.getChildAt(i)).to( { alpha: 1 }, 800, "Linear", true);
 											}else{
 													this.groupDashLines.getChildAt(i).alpha = 0;
 											}
 									}
-
-									console.log("this.currentAlphabet: " + this.currentAlphabet);
-									console.log("this.currentPartWordDrawing: " + this.currentPartWordDrawing);
 
 									//set position for numbers
 									this.groupNumbers.removeAll();
@@ -302,7 +321,6 @@ WordTrack.TraceWord.prototype = {
 									this.add.tween(this.imgStarWellDone).to( { x: 640 }, 500, "Linear", true);
 									this.add.tween(this.imgStarWellDone.scale).to({x: 1.3, y: 1.3}, 700, "Linear", true, 0 , -1, true);
 
-									console.log("export key: " + "export" + jsonNumber[this.currentAlphabet].word);
 									var texture = this.bmd.generateTexture("export" + jsonNumber[this.currentAlphabet].word);
 							}
 					}
@@ -320,23 +338,22 @@ WordTrack.TraceWord.prototype = {
 	},
 
 	initWord: function(word){
-			console.log('load word: ' + word);
 			this.checkDrawDone = false;
 			this.currentPartWordDrawing = 0;
 			var jsonObjNumber = this.state.states['Preloader'].jsonObjNumber;
 			jsonNumber = JSON.parse(jsonObjNumber);
 
 			for(var i = 0 ; i < jsonNumber.length; i ++) {
-					console.log("jsonNumber[i].word : " + jsonNumber[i].word);
 					if(jsonNumber[i].word === word) {
 							this.currentAlphabet = i;
 							for(var j = 0 ; j < jsonNumber[i].draw.length ; j++) {
-									//console.log("jsonNumber[i].draw[j].image : " + jsonNumber[i].draw[j].image);
 									var dashline = this.groupDashLines.create(jsonNumber[i].draw[j].x,
 																		jsonNumber[i].draw[j].y + this.distanceHeihtWord, jsonNumber[i].draw[j].key);
 									dashline.anchor.set(0.5);
-									if(j != 0) {
-											dashline.alpha = 0;
+									dashline.alpha = 0;
+
+									if(j == 0) {
+											this.add.tween(dashline).to( { alpha: 1 }, 800, "Linear", true);
 									}
 							}
 

@@ -288,7 +288,7 @@ WordTrack.Preloader = function(game){
 																						{"key":"Y2", "image":"dashlineY_2.png","x": 411, "y": 189\
 																									,"numbers":[{"x": 439, "y": 138},\
 																															{"x": 375, "y": 250}]},\
-																						{"key":"Y3", "image":"dashlineY_3.png","x": 375, "y": 302\
+																						{"key":"Y3", "image":"dashlineY_3.png","x": 375, "y": 290\
 																									,"numbers":[{"x": 375, "y": 250},\
 																															{"x": 375, "y": 338}]}\
 																					]},\
@@ -324,62 +324,64 @@ WordTrack.Preloader.prototype = {
 		// set background color and preload image
 		this.stage.backgroundColor = '#2FC8DD';
 
-		this.load.spritesheet('btnStart','img/button/btnstart.png', 220, 50);
-		this.load.spritesheet('btnReady', 'img/button/btnreadytogo.png', 220, 50);
-		this.load.spritesheet('btnDone' , 'img/button/btndone.png', 220, 50);
-		this.load.spritesheet('btnTryAgain' , 'img/button/btntryagain.png', 220, 50);
-		this.load.spritesheet('btnNextWord' , 'img/button/btnnextword.png', 220, 50);
+		this.load.spritesheet('btnStart','assets/img/button/btnstart.png', 220, 50);
+		this.load.spritesheet('btnReady', 'assets/img/button/btnreadytogo.png', 220, 50);
+		this.load.spritesheet('btnDone' , 'assets/img/button/btndone.png', 220, 50);
+		this.load.spritesheet('btnTryAgain' , 'assets/img/button/btntryagain.png', 220, 50);
+		this.load.spritesheet('btnNextWord' , 'assets/img/button/btnnextword.png', 220, 50);
+		this.load.spritesheet('btnnextlesson' , 'assets/img/button/btnnextlesson.png', 220, 50);
 
-		this.load.image('welldone' , 'img/welldone.png');
-		this.load.image('tick', 'img/tick.png');
-		this.load.image('lineTranning', 'img/linetranning.png');
+
+		this.load.image('welldone' , 'assets/img/welldone.png');
+		this.load.image('tick', 'assets/img/tick.png');
 
 		//add image background
-		this.load.image('card', 'img/background/card.png');
+		this.load.image('card', 'assets/img/background/card.png');
 
 		var jsonObjWord = this.jsonObjWord;
 		jsonWord = JSON.parse(jsonObjWord);
 		//add image word
 		for(var i = 0 ; i < jsonWord.word.length ; i++) {
-				console.log("jsonWord.word[i].text: " + jsonWord.word[i].text);
-				this.load.image(jsonWord.word[i].text, 'img/word/' + jsonWord.word[i].image);
+				this.load.image(jsonWord.word[i].text, 'assets/img/word/' + jsonWord.word[i].image);
 		}
 
 		var jsonObjNum = this.jsonObjNumber;
 		jsonNum = JSON.parse(jsonObjNum);
 		//add image alphabet
 		for(var i = 0 ; i < jsonNum.length ; i++) {
-				console.log('jsonNum[i].word :' + jsonNum[i].word);
-				console.log('jsonWord[i].image :' + jsonNum[i].image);
-				this.load.image(jsonNum[i].word, 'img/alphabet/' + jsonNum[i].image);
+				this.load.image(jsonNum[i].word, 'assets/img/alphabet/' + jsonNum[i].image);
 				for(var j = 0 ; j < jsonNum[i].draw.length ; j++) {
-						console.log('jsonNum[i].draw[j].key :' + jsonNum[i].draw[j].key);
-						console.log('jsonNum[i].draw[j].image :' + jsonNum[i].draw[j].image);
 						//mapping dashline image with key json
-						this.load.image(jsonNum[i].draw[j].key, 'img/alphabet/' + jsonNum[i].draw[j].image);
+						this.load.image(jsonNum[i].draw[j].key, 'assets/img/alphabet/' + jsonNum[i].draw[j].image);
 				}
 		}
 
 		//add image number
-		this.load.image('1', 'img/number/1.png');
-		this.load.image('2', 'img/number/2.png');
-		this.load.image('3', 'img/number/3.png');
-		this.load.image('4', 'img/number/4.png');
-		this.load.image('5', 'img/number/5.png');
+		this.load.image('1', 'assets/img/number/1.png');
+		this.load.image('2', 'assets/img/number/2.png');
+		this.load.image('3', 'assets/img/number/3.png');
+		this.load.image('4', 'assets/img/number/4.png');
+		this.load.image('5', 'assets/img/number/5.png');
 
-		this.load.image('penlightpink', 'img/penlightpink.png');
-		this.load.image('penorange', 'img/penorange.png');
-		this.load.image('penblue', 'img/penblue.png');
-		this.load.image('pengreen', 'img/pengreen.png');
-		this.load.image('penpink', 'img/penpink.png');
-		this.load.image('penred', 'img/penred.png');
-		this.load.image('penviolet', 'img/penviolet.png');
+		this.load.image('penlightpink', 'assets/img/penlightpink.png');
+		this.load.image('penorange', 'assets/img/penorange.png');
+		this.load.image('penblue', 'assets/img/penblue.png');
+		this.load.image('pengreen', 'assets/img/pengreen.png');
+		this.load.image('penpink', 'assets/img/penpink.png');
+		this.load.image('penred', 'assets/img/penred.png');
+		this.load.image('penviolet', 'assets/img/penviolet.png');
 
-		this.load.image('btnnext', 'img/btnnext.png');
-		this.load.image('btnreload', 'img/btnreload.png');
+		this.load.image('btnnext', 'assets/img/btnnext.png');
+		this.load.image('btnreload', 'assets/img/btnreload.png');
+
+		this.load.image('levelcomplete', 'assets/img/levelcomplete.png');
+
+		//load audio
+		this.load.audio('soundMoonlight', 'assets/sounds/MiningbyMoonlight.mp3');
 
 		//load json data
-		//this.load.text('dataNumbers', '/my/numbers.json');
+		//this.load.json('drawingJson', 'assets/json/drawing.json');
+		//this.load.json('wordJson', 'assets/json/words.json');
 	},
 	create: function(){
 		// start the MainMenu state

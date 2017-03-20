@@ -32,10 +32,6 @@ WordTrack.MainMenu.prototype = {
 					this.n3 = this.rnd.integerInRange(0, maxLength);
 			}
 
-			console.log('n1: '+ this.n1);
-			console.log('n2: '+ this.n2);
-			console.log('n3: '+ this.n3);
-
       //add text
       var textWordTrace = this.add.text(this.world.centerX,10,'Word Tracer', {font: "72px Verdana", fill: '#FFFFFF'});
 			textWordTrace.anchor.setTo(0.5, 0);

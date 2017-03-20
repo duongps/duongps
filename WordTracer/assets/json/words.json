@@ -1,0 +1,11 @@
+{
+    "word":[{"text":"BADMINTON", "image": "badminton.png"},
+            {"text":"BASEBALL", "image": "baseball.png"},
+            {"text":"BASKETBALL", "image": "basketball.png"},
+            {"text":"CYCLING", "image": "cycling.png"},
+            {"text":"FOOTBALL", "image": "football.png"},
+            {"text":"GOLF", "image": "golf.png"},
+            {"text":"HOCKEY", "image": "hockey.png"},
+            {"text":"RUGBY", "image": "rugby.png"},
+            {"text":"TENNIS", "image": "tennis.png"}]
+}

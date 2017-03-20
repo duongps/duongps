@@ -6,7 +6,6 @@ WordTrack.Game = function(game){
 WordTrack.Game.prototype = {
 	create: function(){
 			this.wordDraw = this.state.states['MainMenu'].arrWordDraw.shift();
-			console.log('Draw word: ' + this.wordDraw);
 
 			//add text
 			var textWordTrace = this.add.text(this.world.centerX, 5, 'Word	Tracer', {font: "20px Verdana", fill: '#FFFFFF'});
@@ -14,6 +13,9 @@ WordTrack.Game.prototype = {
 
 			var textLearnWord = this.add.text(this.world.centerX, 40, this.wordDraw, {font: "23px Verdana", fill: '#FFFFFF'});
 			textLearnWord.anchor.setTo(0.5, 0);
+
+			//draw line
+			this.drawLine();
 
 			var img = this.game.add.image(this.world.centerX, this.world.centerY, 'card');
 			img.anchor.set(0.5);
@@ -32,6 +34,19 @@ WordTrack.Game.prototype = {
 
 			var btn = this.add.button(this.world.centerX, 460, 'btnReady', this.readyGame, this, 1, 0, 2);
 			btn.anchor.set(0.5);
+	},
+
+	drawLine: function(){
+			var graphics = this.add.graphics(0, 0);
+			graphics.lineStyle(8, 0xFFFFFF);
+			graphics.moveTo((this.world.width - 650) / 2,36);
+			graphics.lineTo((this.world.width + 650) / 2, 36);
+
+			graphics.lineStyle(8, 0xFCEE21);
+			graphics.moveTo((this.world.width - 650) / 2,36);
+			graphics.lineTo((this.world.width + 650) / 2 * ((3 - this.state.states['MainMenu'].arrWordDraw.length) / 3), 36);
+
+			window.graphics = graphics;
 	},
 
 	update: function() {
